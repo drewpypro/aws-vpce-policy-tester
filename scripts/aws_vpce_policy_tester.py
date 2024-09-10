@@ -13,22 +13,32 @@ def load_service_commands():
         print(f"Error: The file {file_path} was not found.")
         sys.exit(1)
 
-# Function to run AWS CLI commands
+# Function to run AWS CLI commands and check for VPC endpoint policy block
 def run_aws_command(command):
     try:
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        return result.stdout if result.returncode == 0 else result.stderr
+        output = result.stdout if result.returncode == 0 else result.stderr
+        if "because no VPC endpoint policy allows" in output:
+            verdict = "Blocked by VPC Endpoint Policy"
+        else:
+            verdict = "Command Allowed by VPC Endpoint Policy"
+        return output, verdict
     except Exception as e:
-        return f"Error running command: {command}\n{str(e)}"
+        return f"Error running command: {command}\n{str(e)}", "Error"
+
+# Function to print to both console and file
+def log_to_console_and_file(report, message):
+    print(message)  # Output to console
+    report.write(message + "\n")  # Write to the file
 
 # Function to test services and write results to a report
 def test_services(service_commands, output_file):
     with open(output_file, 'w') as report:
         for service, commands in service_commands.items():
-            report.write(f"\nTesting VPC Endpoint Policy for service: {service}\n")
+            log_to_console_and_file(report, f"\nTesting VPC Endpoint Policy for service: {service}")
             for cmd in commands:
-                result = run_aws_command(cmd)
-                report.write(f"\nCommand: {cmd}\nResult: {result}\n")
+                result, verdict = run_aws_command(cmd)
+                log_to_console_and_file(report, f"\nCommand: {cmd}\nResult: {result}\nVerdict: {verdict}")
 
 # Function to display options and explain usage
 def show_usage():
