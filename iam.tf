@@ -10,21 +10,21 @@ resource "aws_iam_policy" "test_policy" {
         Sid    = "BadIamPolicy"
         Effect = "Allow"
         Action = [
-            "autoscaling:*"
-            "dms:*"
-            "dynamodb:*"
-            "ec2:*"
-            "ec2messages:*"
-            "elasticloadbalancing:*"
-            "logs:*"
-            "monitoring:*"
-            "rds:*"
-            "s3:*"
-            "secretsmanager:*"
-            "sns:*"
-            "sqs:*"
-            "ssm:*"
-            "ssmmessages:*"
+            "autoscaling:*",
+            "dms:*",
+            "dynamodb:*",
+            "ec2:*",
+            "ec2messages:*",
+            "elasticloadbalancing:*",
+            "logs:*",
+            "monitoring:*",
+            "rds:*",
+            "s3:*",
+            "secretsmanager:*",
+            "sns:*",
+            "sqs:*",
+            "ssm:*",
+            "ssmmessages:*",
             "sts:*"
         ]
         Resource = "*"
