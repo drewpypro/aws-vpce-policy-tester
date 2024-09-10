@@ -62,7 +62,7 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.condition or not args.output:
+    if not args.output:
         show_usage()
         sys.exit(0)
 
