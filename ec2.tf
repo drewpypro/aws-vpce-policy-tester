@@ -1,3 +1,6 @@
+provider "aws" {
+  region     = var.region
+}
 
 resource "aws_instance" "test_ec2" {
   ami             = var.ami_id
