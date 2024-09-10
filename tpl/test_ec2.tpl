@@ -12,8 +12,20 @@ sudo sed -i 's/#PrintLastLog yes/PrintLastLog no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
 
+                                
+ASCII_ART='  ______   __       __   ______  
+ /      \ |  \  _  |  \ /      \ 
+|  $$$$$$\| $$ / \ | $$|  $$$$$$\
+| $$__| $$| $$/  $\| $$| $$___\$$
+| $$    $$| $$  $$$\ $$ \$$    \ 
+| $$$$$$$$| $$ $$\$$\$$ _\$$$$$$\
+| $$  | $$| $$$$  \$$$$|  \__| $$
+| $$  | $$| $$$    \$$$ \$$    $$
+ \$$   \$$ \$$      \$$  \$$$$$$ '
+
 # Create the new banner content directly into the file
 {
+  echo "$ASCII_ART"    
   echo "Welcome to the VPC Endpoint Tester VM."
   echo "Use the following command to start the test and produce a report:"
   echo "python aws-vpce-policy-tester --condition [org-id, ou-path, resource, principalAccount ] report.txt"
