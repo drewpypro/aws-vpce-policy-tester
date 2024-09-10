@@ -11,6 +11,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
         var.option == 2 ? "PrincipalAccount-policy.json" :
         var.option == 3 ? "PrincipalOrgPaths-policy.json" :
         var.option == 4 ? "Resource-policy.json" :
+        var.option == 5 ? "broken_policy.json" :
         "PrincipalOrgID-policy.json"
       }",
      {
@@ -40,6 +41,7 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
         var.option == 2 ? "PrincipalAccount-policy.json" :
         var.option == 3 ? "PrincipalOrgPaths-policy.json" :
         var.option == 4 ? "Resource-policy.json" :
+        var.option == 5 ? "broken_policy.json" :
         "PrincipalOrgID-policy.json"
       }",
      {

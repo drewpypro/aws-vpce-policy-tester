@@ -1,15 +1,14 @@
 {
-    "autoscaling": [
+  "autoscaling": [
       "aws autoscaling describe-auto-scaling-groups",
-      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-launch-config --min-size 1 --max-size 1",
+      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name invalid-config --min-size 1 --max-size 1",
       "aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg"
-    ],
+  ],
     "dms": [
-      "aws dms list-tags-for-resource --resource-arn bogus-arn",
-      "aws dms describe-endpoints",
-      "aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db",
-      "aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn",
-      "aws dms start-replication-task --replication-task-arn bogus-task-arn --start-replication-task-type start-replication"
+        "aws dms list-tags-for-resource --resource-arn bogus-arn",
+        "aws dms describe-endpoints",
+        "aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234", 
+        "aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn"
     ],
     "dynamodb": [
       "aws dynamodb list-tables",

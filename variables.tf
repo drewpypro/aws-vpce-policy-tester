@@ -1,7 +1,7 @@
 variable "option" {
   type    = number
-  description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (<service>:*:<local.account>:*), or 4 (OU-Path)"
-  default = 1  # Default to PrincipalOrgID
+  description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (<service>:*:<local.account>:*), 4 (OU-Path) or 5 (Deny All)"
+  default = 5  # Default to PrincipalOrgID
 }
 
 # Define a list of services that need VPC endpoints
