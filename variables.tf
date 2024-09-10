@@ -10,6 +10,7 @@ locals {
     2 = "PrincipalAccount"
     3 = "<service>:*:<local.account>:*"
     4 = "OU-Path"
+    5 = "DenyAll"
   }
 }
 
