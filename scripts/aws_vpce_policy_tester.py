@@ -46,12 +46,10 @@ def show_usage():
     Usage: python aws-vpce-policy-tester.py [OPTIONS]
 
     Options:
-    --condition CONDITION   Test condition type (e.g., org-id, principal-account, resource-account, ou-path)
     --output OUTPUT         Specify the output report file (e.g., report.txt)
 
     Examples:
-    python aws-vpce-policy-tester.py --condition org-id --output report.txt
-    python aws-vpce-policy-tester.py --condition principal-account --output result.txt
+    python aws-vpce-policy-tester.py --output report.txt
 
     If no options are provided, this help message will be shown.
     """)
@@ -60,7 +58,6 @@ def show_usage():
 def main():
     parser = argparse.ArgumentParser(add_help=False)
 
-    parser.add_argument('--condition', type=str, help='Test condition type (e.g., org-id, principal-account, service-account, ou-path)')
     parser.add_argument('--output', type=str, help='Specify the output report file (e.g., report.txt)')
 
     args = parser.parse_args()

@@ -23,10 +23,14 @@ ASCII_ART='  ______   __       __   ______
 
 # Create the new banner content directly into the file
 {
+  echo ""
   echo "$ASCII_ART"    
+  echo ""
   echo "Welcome to the VPC Endpoint Tester VM."
+  echo "The Terraform Scripts built this to test Option${option} which configures ${option_description} as a condition in vpc endpoint policy."
   echo "Use the following command to start the test and produce a report:"
-  echo "python aws_vpce_policy_tester.py --condition [org-id, ou-path, resource, principalAccount ] report.txt"
+  echo "python aws_vpce_policy_tester.py --output report.txt"
+  echo ""
 } | sudo tee /usr/lib/motd.d/30-banner
 
 sudo systemctl daemon-reload

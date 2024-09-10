@@ -4,6 +4,15 @@ variable "option" {
   default = 5  # Default to PrincipalOrgID
 }
 
+locals {
+  option_description = {
+    1 = "PrincipalOrgID"
+    2 = "PrincipalAccount"
+    3 = "<service>:*:<local.account>:*"
+    4 = "OU-Path"
+  }
+}
+
 # Define a list of services that need VPC endpoints
 variable "services" {
   default = ["s3", "dms", "dynamodb", "ec2messages", "elasticloadbalancing", 
