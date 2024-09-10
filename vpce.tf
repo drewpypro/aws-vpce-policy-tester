@@ -4,6 +4,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
   vpc_id             = aws_vpc.test_vpc.id
   service_name       = "com.amazonaws.${var.region}.${each.key}"
   vpc_endpoint_type  = "Interface"
+  private_dns_enabled = true
 
   policy = templatefile(
       "${path.module}/policies/${
