@@ -52,16 +52,16 @@ steps:
       from_secret: AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
       from_secret: AWS_SECRET_ACCESS_KEY
-    org_id:
-      from_secret: org_id
-    org_path:
-      from_secret: org_path
-    account_id:
-      from_secret: account_id
-    source_ssh_network:
-      from_secret: source_ssh_network
-    public_key:
-      from_secret: public_key
+    TF_VAR_org_id:
+      from_secret: TF_VAR_org_id
+    TF_VAR_org_path:
+      from_secret: TF_VAR_org_path
+    TF_VAR_account_id:
+      from_secret: TF_VAR_account_id
+    TF_VAR_source_ssh_network:
+      from_secret: TF_VAR_source_ssh_network
+    TF_VAR_public_key:
+      from_secret: TF_VAR_public_key
   commands:
     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
     - terraform init
@@ -78,16 +78,16 @@ steps:
       from_secret: AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY:
       from_secret: AWS_SECRET_ACCESS_KEY
-    org_id:
-      from_secret: org_id
-    org_path:
-      from_secret: org_path
-    account_id:
-      from_secret: account_id
-    source_ssh_network:
-      from_secret: source_ssh_network
-    public_key:
-      from_secret: public_key
+    TF_VAR_org_id:
+      from_secret: TF_VAR_org_id
+    TF_VAR_org_path:
+      from_secret: TF_VAR_org_path
+    TF_VAR_account_id:
+      from_secret: TF_VAR_account_id
+    TF_VAR_source_ssh_network:
+      from_secret: TF_VAR_source_ssh_network
+    TF_VAR_public_key:
+      from_secret: TF_VAR_public_key
   commands:
     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
     - terraform apply -auto-approve
