@@ -30,7 +30,6 @@ resource "aws_subnet" "endpoint_subnet" {
 
 
 resource "aws_internet_gateway" "test_igw" {
-  provider = aws.test
   vpc_id   = aws_vpc.test_vpc.id
 
   tags = {
@@ -39,7 +38,6 @@ resource "aws_internet_gateway" "test_igw" {
 }
 
 resource "aws_route_table" "test_rt_1" {
-  provider = aws.test
   vpc_id   = aws_vpc.test_vpc.id
 
   route {
