@@ -1,0 +1,97 @@
+kind: pipeline
+type: docker
+name: terraform-pipeline
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  disable: true
+
+volumes:
+  - name: terraform
+    host:
+      path: /mnt/apppooldisk/devappdata/drone-runners
+
+environment:
+  STATIC_IP: 172.31.1.113
+
+steps:
+- name: create_directories
+  image: alpine:latest
+  volumes:
+    - name: terraform
+      path: /workspace/terraform
+  commands:
+    - mkdir -p /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
+
+# Optional: If you still want manual cloning
+- name: custom_clone
+  image: docker:git
+  network_mode: br1.201
+  volumes:
+    - name: terraform
+      path: /workspace/terraform
+  commands:
+    - if [ -d /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/.git ]; then
+        cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/ && git fetch && git reset --hard origin/main;
+      else
+        git clone https://git.drewpy.pro/johnpshids/aws-vpce-policy-tester /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/;
+      fi
+
+# Run terraform init, plan, apply
+- name: terraform-plan
+  image: hashicorp/terraform:latest
+  network_mode: br1.201
+  volumes:
+    - name: terraform
+      path: /workspace/terraform
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: AWS_SECRET_ACCESS_KEY
+    org_id:
+      from_secret: org_id
+    org_path:
+      from_secret: org_path
+    account_id:
+      from_secret: account_id
+    source_ssh_network:
+      from_secret: source_ssh_network
+    public_key:
+      from_secret: public_key
+  commands:
+    - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
+    - terraform init
+    - terraform plan
+
+- name: terraform-apply
+  image: hashicorp/terraform:latest
+  network_mode: br1.201
+  volumes:
+    - name: terraform
+      path: /workspace/terraform
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: AWS_SECRET_ACCESS_KEY
+    org_id:
+      from_secret: org_id
+    org_path:
+      from_secret: org_path
+    account_id:
+      from_secret: account_id
+    source_ssh_network:
+      from_secret: source_ssh_network
+    public_key:
+      from_secret: public_key
+  commands:
+    - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
+    - terraform apply -auto-approve
+
+trigger:
+  branch:
+    - main

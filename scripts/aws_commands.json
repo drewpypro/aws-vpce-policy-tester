@@ -1,0 +1,104 @@
+{
+    "autoscaling": [
+      "aws autoscaling describe-auto-scaling-groups",
+      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-launch-config --min-size 1 --max-size 1",
+      "aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg"
+    ],
+    "dms": [
+      "aws dms list-tags-for-resource --resource-arn bogus-arn",
+      "aws dms describe-endpoints",
+      "aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db",
+      "aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn",
+      "aws dms start-replication-task --replication-task-arn bogus-task-arn --start-replication-task-type start-replication"
+    ],
+    "dynamodb": [
+      "aws dynamodb list-tables",
+      "aws dynamodb describe-endpoints",
+      "aws dynamodb create-table --table-name bogus-table --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5",
+      "aws dynamodb delete-table --table-name bogus-table",
+      "aws dynamodb get-item --table-name bogus-table --key '{\"id\": {\"S\": \"bogus\"}}'",
+      "aws dynamodb put-item --table-name bogus-table --item '{\"id\": {\"S\": \"bogus\"}}'"
+    ],
+    "ec2": [
+      "aws ec2 list-snapshots-in-recycle-bin",
+      "aws ec2 describe-security-group-rules --group-id bogus-group-id",
+      "aws ec2 create-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0 --gateway-id bogus-gateway-id",
+      "aws ec2 delete-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0",
+      "aws ec2 copy-image --source-image-id bogus-image-id --source-region us-east-1 --name bogus-image-copy",
+      "aws ec2 copy-snapshot --source-region us-east-1 --source-snapshot-id bogus-snapshot-id"
+    ],
+    "elasticloadbalancing": [
+      "aws elbv2 describe-load-balancers",
+      "aws elbv2 create-load-balancer --name bogus-lb --subnets bogus-subnet-id",
+      "aws elbv2 delete-load-balancer --load-balancer-arn bogus-lb-arn",
+      "aws elbv2 set-security-groups --load-balancer-arn bogus-lb-arn --security-groups bogus-sg-id"
+    ],
+    "monitoring": [
+      "aws cloudwatch list-tags-for-resource --resource-arn bogus-resource-arn",
+      "aws cloudwatch describe-alarms",
+      "aws cloudwatch put-metric-data --namespace bogus-namespace --metric-name bogus-metric --value 1.0",
+      "aws cloudwatch get-metric-data --metric-data-queries bogus-query"
+    ],
+    "logs": [
+      "aws logs list-tags-for-resource --resource-arn bogus-log-arn",
+      "aws logs describe-log-groups",
+      "aws logs create-log-group --log-group-name bogus-log-group",
+      "aws logs delete-log-group --log-group-name bogus-log-group",
+      "aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream",
+      "aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events '[{\"timestamp\": 1234567890, \"message\": \"bogus-log-message\"}]'"
+    ],
+    "rds": [
+      "aws rds list-tags-for-resource --resource-name bogus-db-instance",
+      "aws rds describe-db-security-groups",
+      "aws rds create-db-instance --db-instance-identifier bogus-instance --db-instance-class db.t2.micro --engine mysql --master-username bogus-user --master-user-password bogus-pass --allocated-storage 20",
+      "aws rds delete-db-instance --db-instance-identifier bogus-instance",
+      "aws rds copy-db-snapshot --source-db-snapshot-identifier bogus-snapshot",
+      "aws rds modify-db-cluster-snapshot-attribute --db-cluster-snapshot-identifier bogus-cluster --attribute-name restore --values-to-add bogus"
+    ],
+    "s3": [
+      "aws s3 ls",
+      "aws s3 mb s3://bogus-bucket",
+      "aws s3 rb s3://bogus-bucket",
+      "aws s3api get-object --bucket bogus-bucket --key bogus-key /tmp/bogus-file",
+      "aws s3api put-object --bucket bogus-bucket --key bogus-key --body /tmp/bogus-file"
+    ],
+    "secretsmanager": [
+      "aws secretsmanager list-secrets",
+      "aws secretsmanager describe-custom-key-stores",
+      "aws secretsmanager create-secret --name bogus-secret --secret-string bogus-string",
+      "aws secretsmanager delete-secret --secret-id bogus-secret-id",
+      "aws secretsmanager get-random-password",
+      "aws secretsmanager get-secret-value --secret-id bogus-secret-id"
+    ],
+    "sns": [
+      "aws sns list-topics",
+      "aws sns create-topic --name bogus-topic",
+      "aws sns delete-topic --topic-arn bogus-topic-arn",
+      "aws sns publish --topic-arn bogus-topic-arn --message 'Bogus message'"
+    ],
+    "sqs": [
+      "aws sqs list-queues",
+      "aws sqs create-queue --queue-name bogus-queue",
+      "aws sqs delete-queue --queue-url bogus-queue-url",
+      "aws sqs send-message --queue-url bogus-queue-url --message-body 'Bogus message'",
+      "aws sqs receive-message --queue-url bogus-queue-url"
+    ],
+    "ssm": [
+      "aws ssm list-commands",
+      "aws ssm describe-instance-information",
+      "aws ssm create-document --name bogus-document --content file://bogus-document.json",
+      "aws ssm delete-parameter --name bogus-parameter",
+      "aws ssm send-command --document-name bogus-document --targets '[{\"Key\":\"InstanceIds\",\"Values\":[\"bogus-instance-id\"]}]'"
+    ],
+    "ssmmessages": [
+      "aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateControlChannel",
+      "aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel",
+      "aws ssm open-control-channel --target bogus-instance-id",
+      "aws ssm open-data-channel --target bogus-instance-id"
+    ],
+    "sts": [
+      "aws sts assume-role --role-arn bogus-role-arn --role-session-name bogus-session",
+      "aws sts get-session-token"
+    ]
+  }
+  
