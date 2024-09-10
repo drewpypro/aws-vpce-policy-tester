@@ -25,6 +25,7 @@ resource "aws_instance" "test_ec2" {
     public_key             = var.public_key
     startup_script         = file("${path.module}/scripts/test_ec2_startup.sh")
     aws_commands           = file("${path.module}/scripts/aws_commands.json")
+    tester_script          = file("${path.module}/scripts/aws_vpce_policy_tester.py")
   })
 }
 
@@ -35,8 +36,6 @@ resource "aws_eip" "test_ec2_eip" {
   domain   = "vpc"
 }
 
-output "test_ec2_instance_id" {
-  value       = aws_instance.test_ec2.id
-  description = "The instance ID of the test EC2 instance"
+output "test_ec2_public_ip" {
+  value = aws_eip.test_ec2_eip.public_ip
 }
-

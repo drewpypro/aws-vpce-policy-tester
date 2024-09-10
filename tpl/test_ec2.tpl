@@ -10,8 +10,6 @@ sudo rm /usr/lib/motd.d/20-*  # Remove any other MOTD scripts
 
 sudo sed -i 's/#PrintLastLog yes/PrintLastLog no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
-
-
                                 
 ASCII_ART='  ______   __       __   ______  
  /      \ |  \  _  |  \ /      \ 
@@ -28,7 +26,7 @@ ASCII_ART='  ______   __       __   ______
   echo "$ASCII_ART"    
   echo "Welcome to the VPC Endpoint Tester VM."
   echo "Use the following command to start the test and produce a report:"
-  echo "python aws-vpce-policy-tester --condition [org-id, ou-path, resource, principalAccount ] report.txt"
+  echo "python aws_vpce_policy_tester.py --condition [org-id, ou-path, resource, principalAccount ] report.txt"
 } | sudo tee /usr/lib/motd.d/30-banner
 
 sudo systemctl daemon-reload
@@ -49,6 +47,12 @@ sudo pip3 install argparse subprocess json sys
 cat <<'EOF' > /home/ec2-user/aws_commands.json
 ${aws_commands}
 EOF
+
+# Load AWS command database
+cat <<'EOF' > /home/ec2-user/aws_vpce_policy_tester.py
+${tester_script}
+EOF
+
 
 sudo chmod +x /usr/local/bin/test_ec2_startup.sh
 sudo /usr/local/bin/test_ec2_startup.sh
