@@ -70,7 +70,6 @@ def main():
     service_commands = load_service_commands()
 
     # Log the options selected by the user
-    print(f"Condition selected: {args.condition}")
     print(f"Output will be written to: {args.output}")
 
     # Run the tests and write the report
