@@ -5,8 +5,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
   service_name       = "com.amazonaws.${var.region}.${each.key}"
   vpc_endpoint_type  = "Interface"
 
-  policy {
-    document = templatefile(
+  policy = templatefile(
       "${path.module}/policies/${
         var.option == 1 ? "PrincipalOrgID-policy.json" :
         var.option == 2 ? "PrincipalAccount-policy.json" :
@@ -22,7 +21,6 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
         region       = var.region
      }
     )
-  }
 
   security_group_ids = [aws_security_group.test_privatelink_sg.id]
   subnet_ids         = [aws_subnet.endpoint_subnet.id]
@@ -36,8 +34,7 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
   vpc_endpoint_type = "Gateway"
   route_table_ids   = [aws_route_table.test_rt_1.id]
 
-  policy {
-    document = templatefile(
+  policy = templatefile(
       "${path.module}/policies/${
         var.option == 1 ? "PrincipalOrgID-policy.json" :
         var.option == 2 ? "PrincipalAccount-policy.json" :
@@ -53,5 +50,4 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
         region       = var.region
      }
     )
-  }
 }
