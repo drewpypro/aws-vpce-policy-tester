@@ -1,3 +1,16 @@
+# AWS-VPCE-Policy-Tester
+
+# Summary
+    - Creates vpc, vpc-endpoints, vpc-endpoint policy (based on an option selected), iam policy and an ec2 that runs aws commands to determine vpc-endpoint policy. 
+    - 
+
+
+1. IAM policy applied to host is unrestricted to ensure that denies are explicitly vpc-endpoint related. 
+2. Commands are in some cases invalid, as evident by vpc-endpoint policy deny, we can tell that the commands are first denied in option5, but then allowed in other options. 
+    - This doesn't necessarily mean each specific aws command will work through the endpoint. 
+    - Further cross-account testing is required. 
+3. 
+
 TO DO:
 -Add account variables to aws_commands.json
 -create csv report output based on time/date.
