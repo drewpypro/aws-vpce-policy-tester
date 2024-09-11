@@ -37,7 +37,7 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
   route_table_ids   = [aws_route_table.test_rt_1.id]
 
   policy = templatefile(
-    "${path.module}/policies/${
+    "${path.module}/policies/s3/${
       var.option == 1 ? "PrincipalOrgID-policy.json" :
       var.option == 2 ? "PrincipalAccount-policy.json" :
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
