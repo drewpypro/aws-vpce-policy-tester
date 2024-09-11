@@ -2,6 +2,8 @@ import argparse
 import subprocess
 import json
 import sys
+import csv
+import datetime
 
 # Load AWS CLI commands from a hard-coded file path
 def load_service_commands():
@@ -26,19 +28,42 @@ def run_aws_command(command):
     except Exception as e:
         return f"Error running command: {command}\n{str(e)}", "Error"
 
-# Function to print to both console and file
-def log_to_console_and_file(report, message):
-    print(message)  # Output to console
-    report.write(message + "\n")  # Write to the file
+# Create a timestamp for filenames
+timestamp = datetime.datetime.now().strftime("%b%d-%H%M")
 
 # Function to test services and write results to a report
-def test_services(service_commands, output_file):
-    with open(output_file, 'w') as report:
-        for service, commands in service_commands.items():
-            log_to_console_and_file(report, f"\nTesting VPC Endpoint Policy for service: {service}")
-            for cmd in commands:
-                result, verdict = run_aws_command(cmd)
-                log_to_console_and_file(report, f"\nCommand: {cmd}\nResult: {result}\nVerdict: {verdict}")
+def test_services(service_commands, output_mode, option_desc):
+    if output_mode in ['log', 'both']:
+        log_file = f"{timestamp}-log.txt"
+        log = open(log_file, 'w')
+
+    if output_mode in ['report', 'both']:
+        report_file = f"{timestamp}-report.csv"
+        report = open(report_file, 'w', newline='')
+        writer = csv.writer(report)
+        writer.writerow(["Command", "Verdict", "Option Description"])  # CSV headers
+
+    for service, commands in service_commands.items():
+        message = f"\nTesting VPC Endpoint Policy for service: {service}"
+        if output_mode in ['log', 'both']:
+            log.write(message + "\n")
+        if output_mode in ['shell', 'both']:
+            print(message)
+
+        for cmd in commands:
+            result, verdict = run_aws_command(cmd)
+            message = f"Command: {cmd}\nResult: {result}\nVerdict: {verdict}"
+            if output_mode in ['log', 'both']:
+                log.write(message + "\n")
+            if output_mode in ['shell', 'both']:
+                print(message)
+            if output_mode in ['report', 'both']:
+                writer.writerow([cmd, verdict, option_desc])
+
+    if output_mode in ['log', 'both']:
+        log.close()
+    if output_mode in ['report', 'both']:
+        report.close()
 
 # Function to display options and explain usage
 def show_usage():
@@ -46,35 +71,40 @@ def show_usage():
     Usage: python aws-vpce-policy-tester.py [OPTIONS]
 
     Options:
-    --output OUTPUT         Specify the output report file (e.g., report.txt)
-
+    --log          Generate a full log file with $day/hour/minute-log.txt.
+    --report       Generate a CSV report with $day/hour/minute-report.csv (command, verdict, option description).
+    --both         Generate both log and report files.
+    --shell        Output only to the shell without writing any files.
+    
     Examples:
-    python aws-vpce-policy-tester.py --output report.txt
-
-    If no options are provided, this help message will be shown.
+    python aws-vpce-policy-tester.py --log
+    python aws-vpce-policy-tester.py --report
+    python aws-vpce-policy-tester.py --both
+    python aws-vpce-policy-tester.py --shell
     """)
 
 # Main function to parse arguments and trigger tests
 def main():
     parser = argparse.ArgumentParser(add_help=False)
 
-    parser.add_argument('--output', type=str, help='Specify the output report file (e.g., report.txt)')
+    parser.add_argument('--log', action='store_true', help='Generate log file output.')
+    parser.add_argument('--report', action='store_true', help='Generate report file output in CSV format.')
+    parser.add_argument('--both', action='store_true', help='Generate both log and report file output.')
+    parser.add_argument('--shell', action='store_true', help='Output only to shell without writing files.')
+    parser.add_argument('--option-description', type=str, help='Option description for the report')
 
     args = parser.parse_args()
 
-    if not args.output:
+    if not (args.log or args.report or args.both or args.shell):
         show_usage()
         sys.exit(0)
 
     # Load the AWS CLI commands from the aws_commands.json file located at /home/ec2-user/
     service_commands = load_service_commands()
 
-    # Log the options selected by the user
-    print(f"Output will be written to: {args.output}")
+    option_desc = args.option_description
+    output_mode = 'log' if args.log else 'report' if args.report else 'both' if args.both else 'shell'
 
     # Run the tests and write the report
-    test_services(service_commands, args.output)
-    print(f"Testing completed. Results have been written to {args.output}.")
-
-if __name__ == "__main__":
-    main()
+    test_services(service_commands, output_mode, option_desc)
+    print(f"Testing completed. Results have been written to {timestamp}.")
