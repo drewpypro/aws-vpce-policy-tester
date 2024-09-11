@@ -65,15 +65,15 @@
     "sns": [
       "aws sns list-topics",
       "aws sns create-topic --name bogus-topic",
-      "aws sns publish --topic-arn arn:aws:sns:us-east-1:${account_id}:bogus-topic --message 'Bogus message'",
-      "aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:${account_id}:bogus-topic"
+      "aws sns publish --topic-arn arn:aws:sns:us-east-1:VAR_ACCOUNT_ID:bogus-topic --message 'Bogus message'",
+      "aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:VAR_ACCOUNT_ID:bogus-topic"
     ],
     "sqs": [
       "aws sqs list-queues",
       "aws sqs create-queue --queue-name bogus-queue",
-      "aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/${account_id}/bogus-queue --message-body 'Bogus message'",
-      "aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/${account_id}/bogus-queue",
-      "aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/${account_id}/bogus-queue"
+      "aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/VAR_ACCOUNT_ID/bogus-queue --message-body 'Bogus message'",
+      "aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/VAR_ACCOUNT_ID/bogus-queue",
+      "aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/VAR_ACCOUNT_ID/bogus-queue"
     ],
     "ssm": [
       "aws ssm list-commands",
@@ -89,7 +89,7 @@
     "sts": [
       "aws sts get-session-token",
       "aws sts get-caller-identity",
-      "aws sts assume-role --role-arn arn:aws:iam::${account_id}:role/aws-service-role/ec2.amazonaws.com/AWSServiceRoleForEC2 --role-session-name bogus-session"      
+      "aws sts assume-role --role-arn arn:aws:iam::VAR_ACCOUNT_ID:role/aws-service-role/ec2.amazonaws.com/AWSServiceRoleForEC2 --role-session-name bogus-session"      
     ]
   }
   
