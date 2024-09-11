@@ -1,14 +1,14 @@
 variable "option" {
   type        = number
-  description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (<service>:*:<local.account>:*), 4 (OU-Path) or 5 (Deny All)"
-  default     = 2 
+  description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (ResourceRestriction), 4 (OU-Path) or 5 (Deny All)"
+  default     = 3 
 }
 
 locals {
   option_description = {
     1 = "PrincipalOrgID"
     2 = "PrincipalAccount"
-    3 = "<service>:*:<local.account>:*"
+    3 = "ResourceRestriction"
     4 = "OU-Path"
     5 = "DenyAll"
   }
