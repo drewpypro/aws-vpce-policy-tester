@@ -25,7 +25,8 @@ resource "aws_iam_policy" "test_policy" {
             "sqs:*",
             "ssm:*",
             "ssmmessages:*",
-            "sts:*"
+            "sts:*",
+            "iam:CreateServiceLinkedRole"
         ]
         Resource = "*"
       }

@@ -36,6 +36,22 @@ echo '{
   }
 }' > /home/ec2-user/item.json
 
+# Create the log-events.json file for the CloudWatch put-log-events command
+echo '[
+  {
+    "timestamp": 1234567890,
+    "message": "bogus-log-message"
+  }
+]' > /home/ec2-user/log-events.json
+
+# Create the log-events.json file for the CloudWatch put-log-events command
+echo '[
+  {
+    "Key": "InstanceIds",
+    "Values": ["bogus-instance-id"]
+  }
+]' > /home/ec2-user/targets.json
+
 # Create the new banner content directly into the file
 {
   echo ""

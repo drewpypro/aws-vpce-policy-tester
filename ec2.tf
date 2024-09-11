@@ -31,7 +31,6 @@ resource "aws_instance" "test_ec2" {
   })
 }
 
-
 ## ELASTIC IP
 resource "aws_eip" "test_ec2_eip" {
   instance = aws_instance.test_ec2.id
