@@ -62,39 +62,7 @@ steps:
     - terraform init
     - terraform plan
 
-# # Run terraform apply if the action parameter is not 'destroy'
-# - name: terraform-apply
-#   image: hashicorp/terraform:latest
-#   network_mode: br1.201
-#   volumes:
-#     - name: terraform
-#       path: /workspace/terraform
-#   environment:
-#     AWS_ACCESS_KEY_ID:
-#       from_secret: AWS_ACCESS_KEY_ID
-#     AWS_SECRET_ACCESS_KEY:
-#       from_secret: AWS_SECRET_ACCESS_KEY
-#     TF_VAR_org_id:
-#       from_secret: TF_VAR_org_id
-#     TF_VAR_org_path:
-#       from_secret: TF_VAR_org_path
-#     TF_VAR_account_id:
-#       from_secret: TF_VAR_account_id
-#     TF_VAR_source_ssh_network:
-#       from_secret: TF_VAR_source_ssh_network
-#     TF_VAR_public_key:
-#       from_secret: TF_VAR_public_key
-#   commands:
-#     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
-#     - terraform apply -auto-approve
-#   when:
-#     params:
-#       DRONE_ACTION:
-#         - apply
-#         - ""
-
-# Run terraform destroy if the action parameter is 'destroy'
-- name: terraform-destroy
+- name: terraform-apply
   image: hashicorp/terraform:latest
   network_mode: br1.201
   volumes:
@@ -117,11 +85,34 @@ steps:
       from_secret: TF_VAR_public_key
   commands:
     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
-    - terraform destroy -auto-approve
-  when:
-    params:
-      DRONE_ACTION:
-        - destroy
+    - terraform apply -auto-approve
+
+# Run terraform destroy if the action parameter is 'destroy'
+# - name: terraform-destroy
+#   image: hashicorp/terraform:latest
+#   network_mode: br1.201
+#   volumes:
+#     - name: terraform
+#       path: /workspace/terraform
+#   environment:
+#     AWS_ACCESS_KEY_ID:
+#       from_secret: AWS_ACCESS_KEY_ID
+#     AWS_SECRET_ACCESS_KEY:
+#       from_secret: AWS_SECRET_ACCESS_KEY
+#     TF_VAR_org_id:
+#       from_secret: TF_VAR_org_id
+#     TF_VAR_org_path:
+#       from_secret: TF_VAR_org_path
+#     TF_VAR_account_id:
+#       from_secret: TF_VAR_account_id
+#     TF_VAR_source_ssh_network:
+#       from_secret: TF_VAR_source_ssh_network
+#     TF_VAR_public_key:
+#       from_secret: TF_VAR_public_key
+#   commands:
+#     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
+#     - terraform destroy -auto-approve
+
 
 trigger:
   branch:
