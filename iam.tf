@@ -10,23 +10,23 @@ resource "aws_iam_policy" "test_policy" {
         Sid    = "BadIamPolicy"
         Effect = "Allow"
         Action = [
-            "autoscaling:*",
-            "dms:*",
-            "dynamodb:*",
-            "ec2:*",
-            "ec2messages:*",
-            "elasticloadbalancing:*",
-            "logs:*",
-            "monitoring:*",
-            "rds:*",
-            "s3:*",
-            "secretsmanager:*",
-            "sns:*",
-            "sqs:*",
-            "ssm:*",
-            "ssmmessages:*",
-            "sts:*",
-            "iam:CreateServiceLinkedRole"
+          "autoscaling:*",
+          "dms:*",
+          "dynamodb:*",
+          "ec2:*",
+          "ec2messages:*",
+          "elasticloadbalancing:*",
+          "logs:*",
+          "monitoring:*",
+          "rds:*",
+          "s3:*",
+          "secretsmanager:*",
+          "sns:*",
+          "sqs:*",
+          "ssm:*",
+          "ssmmessages:*",
+          "sts:*",
+          "iam:CreateServiceLinkedRole"
         ]
         Resource = "*"
       }
@@ -35,7 +35,7 @@ resource "aws_iam_policy" "test_policy" {
 }
 
 resource "aws_iam_role" "test_role" {
-  name     = "TestRole"
+  name = "TestRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -57,8 +57,8 @@ resource "aws_iam_role_policy_attachment" "test_policy_attachment" {
 }
 
 resource "aws_iam_instance_profile" "test_instance_profile" {
-  name     = "TestInstanceProfile"
-  role     = aws_iam_role.test_role.name
+  name = "TestInstanceProfile"
+  role = aws_iam_role.test_role.name
 }
 
 # ## FLOW LOGS IAM

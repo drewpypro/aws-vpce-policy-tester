@@ -88,6 +88,9 @@ cat <<'EOF' > /home/ec2-user/aws_vpce_policy_tester.py
 ${tester_script}
 EOF
 
+# Set the option description in the Python script
+sed -i 's/OPTION_DESCRIPTION/${option_description}/' /home/ec2-user/aws_vpce_policy_tester.py
+
 
 sudo chmod +x /usr/local/bin/test_ec2_startup.sh
 sudo /usr/local/bin/test_ec2_startup.sh

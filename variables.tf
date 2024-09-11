@@ -1,7 +1,7 @@
 variable "option" {
-  type    = number
+  type        = number
   description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (<service>:*:<local.account>:*), 4 (OU-Path) or 5 (Deny All)"
-  default = 1  # Default to PrincipalOrgID
+  default     = 1 # Default to PrincipalOrgID
 }
 
 locals {
@@ -16,10 +16,10 @@ locals {
 
 # Define a list of services that need VPC endpoints
 variable "services" {
-  default = ["autoscaling", "dms", "ec2", "ec2messages", 
-             "elasticloadbalancing", "logs", "monitoring", "rds", 
-             "secretsmanager", "sns", "sqs", "ssm", 
-             "ssmmessages", "sts"]
+  default = ["autoscaling", "dms", "ec2", "ec2messages",
+    "elasticloadbalancing", "logs", "monitoring", "rds",
+    "secretsmanager", "sns", "sqs", "ssm",
+  "ssmmessages", "sts"]
 }
 
 
@@ -47,17 +47,17 @@ variable "availability_zone" {
 
 variable "org_id" {
   description = "org-id must be configured in your aws accounts and supplied as a variable"
-  type = string
+  type        = string
 }
 
 variable "org_path" {
   description = "OU Path must be configured in your aws accounts and supplied as a variable"
-  type = string
+  type        = string
 }
 
 variable "account_id" {
-  description = "An account must be created prior to test and this is mandatory variable"  
-  type = string
+  description = "An account must be created prior to test and this is mandatory variable"
+  type        = string
 }
 
 variable "ami_id" {

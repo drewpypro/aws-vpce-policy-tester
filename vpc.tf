@@ -29,7 +29,7 @@ resource "aws_subnet" "endpoint_subnet" {
 }
 
 resource "aws_internet_gateway" "test_igw" {
-  vpc_id   = aws_vpc.test_vpc.id
+  vpc_id = aws_vpc.test_vpc.id
 
   tags = {
     Name = "test-igw"
@@ -37,7 +37,7 @@ resource "aws_internet_gateway" "test_igw" {
 }
 
 resource "aws_route_table" "test_rt_1" {
-  vpc_id   = aws_vpc.test_vpc.id
+  vpc_id = aws_vpc.test_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"

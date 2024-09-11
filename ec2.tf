@@ -1,5 +1,5 @@
 provider "aws" {
-  region     = var.region
+  region = var.region
 }
 
 resource "aws_instance" "test_ec2" {
@@ -22,12 +22,12 @@ resource "aws_instance" "test_ec2" {
   iam_instance_profile = aws_iam_instance_profile.test_instance_profile.name
 
   user_data = templatefile("tpl/test_ec2.tpl", {
-    public_key             = var.public_key
-    startup_script         = file("${path.module}/scripts/test_ec2_startup.sh")
-    aws_commands           = file("${path.module}/scripts/aws_commands.json")
-    tester_script          = file("${path.module}/scripts/aws_vpce_policy_tester.py")
-    option                 = var.option
-    option_description     = local.option_description[var.option]
+    public_key         = var.public_key
+    startup_script     = file("${path.module}/scripts/test_ec2_startup.sh")
+    aws_commands       = file("${path.module}/scripts/aws_commands.json")
+    tester_script      = file("${path.module}/scripts/aws_vpce_policy_tester.py")
+    option             = var.option
+    option_description = local.option_description[var.option]
   })
 }
 

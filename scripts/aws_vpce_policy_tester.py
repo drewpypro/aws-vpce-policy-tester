@@ -5,14 +5,14 @@ import sys
 import csv
 import datetime
 
-# Load AWS CLI commands from a hard-coded file path
+# Load AWS CLI command database
 def load_service_commands():
     file_path = "/home/ec2-user/aws_commands.json"
     try:
         with open(file_path, 'r') as f:
             return json.load(f)
     except FileNotFoundError:
-        print(f"Error: The file {file_path} was not found.")
+        print(f"Error: Command Database {file_path} not found.")
         sys.exit(1)
 
 # Function to run AWS CLI commands and check for VPC endpoint policy block
@@ -21,9 +21,9 @@ def run_aws_command(command):
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         output = result.stdout if result.returncode == 0 else result.stderr
         if "explicit deny in a VPC endpoint policy" in output:
-            verdict = "Blocked by VPC Endpoint Policy"
+            verdict = "Denied by VPC Endpoint Policy"
         else:
-            verdict = "Command Allowed by VPC Endpoint Policy"
+            verdict = "Allowed by VPC Endpoint Policy"
         return output, verdict
     except Exception as e:
         return f"Error running command: {command}\n{str(e)}", "Error"
@@ -31,7 +31,7 @@ def run_aws_command(command):
 # Create a timestamp for filenames
 timestamp = datetime.datetime.now().strftime("%b%d-%H%M")
 
-# Function to test services and write results to a report
+# Function to test services and write results to file
 def test_services(service_commands, output_mode, option_desc):
     if output_mode in ['log', 'both']:
         log_file = f"{timestamp}-log.txt"
@@ -41,7 +41,7 @@ def test_services(service_commands, output_mode, option_desc):
         report_file = f"{timestamp}-report.csv"
         report = open(report_file, 'w', newline='')
         writer = csv.writer(report)
-        writer.writerow(["Command", "Verdict", "Option Description"])  # CSV headers
+        writer.writerow(["Command", "Verdict", "Option Description"])
 
     for service, commands in service_commands.items():
         message = f"\nTesting VPC Endpoint Policy for service: {service}"
@@ -85,13 +85,12 @@ def show_usage():
 
 # Main function to parse arguments and trigger tests
 def main():
-    parser = argparse.ArgumentParser(add_help=False)
+    parser = argparse.ArgumentParser()
 
     parser.add_argument('--log', action='store_true', help='Generate log file output.')
     parser.add_argument('--report', action='store_true', help='Generate report file output in CSV format.')
     parser.add_argument('--both', action='store_true', help='Generate both log and report file output.')
     parser.add_argument('--shell', action='store_true', help='Output only to shell without writing files.')
-    parser.add_argument('--option-description', type=str, help='Option description for the report')
 
     args = parser.parse_args()
 
@@ -99,12 +98,15 @@ def main():
         show_usage()
         sys.exit(0)
 
-    # Load the AWS CLI commands from the aws_commands.json file located at /home/ec2-user/
+    # Load the AWS CLI commands from the command database
     service_commands = load_service_commands()
 
-    option_desc = args.option_description
+    option_desc = "OPTION_DESCRIPTION"
     output_mode = 'log' if args.log else 'report' if args.report else 'both' if args.both else 'shell'
 
-    # Run the tests and write the report
+    # Run tests and write to file if requested.
     test_services(service_commands, output_mode, option_desc)
     print(f"Testing completed. Results have been written to {timestamp}.")
+
+if __name__ == "__main__":
+    main()
