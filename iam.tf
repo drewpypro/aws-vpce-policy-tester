@@ -1,6 +1,6 @@
 ## IAM FOR PRODUCER VM
-resource "aws_iam_policy" "test_policy" {
-  name        = "TestPolicy"
+resource "aws_iam_policy" "test_ec2_policy" {
+  name        = "Test_ec2_Policy"
   description = "Policy for Test EC2 instances applied using instance profile"
 
   policy = jsonencode({
@@ -34,8 +34,8 @@ resource "aws_iam_policy" "test_policy" {
   })
 }
 
-resource "aws_iam_role" "test_role" {
-  name = "TestRole"
+resource "aws_iam_role" "test_ec2_role" {
+  name = "Test_ec2_Role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -52,13 +52,13 @@ resource "aws_iam_role" "test_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "test_policy_attachment" {
-  role       = aws_iam_role.test_role.name
-  policy_arn = aws_iam_policy.test_policy.arn
+  role       = aws_iam_role.test_ec2_role.name
+  policy_arn = aws_iam_policy.test_ec2_policy.arn
 }
 
 resource "aws_iam_instance_profile" "test_instance_profile" {
   name = "TestInstanceProfile"
-  role = aws_iam_role.test_role.name
+  role = aws_iam_role.test_ec2_role.name
 }
 
 # ## FLOW LOGS IAM
