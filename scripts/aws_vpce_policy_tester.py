@@ -24,6 +24,8 @@ def run_aws_command(command):
             verdict = "Queue does not exist"
         elif "explicit deny in a VPC endpoint policy" in output:
             verdict = "Denied by VPC Endpoint Policy"
+        elif "because no VPC endpoint policy" in output:
+            verdict = "Denied by VPC Endpoint Policy"
         else:
             verdict = "Allowed by VPC Endpoint Policy"
         return output, verdict
