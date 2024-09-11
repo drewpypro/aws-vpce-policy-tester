@@ -76,7 +76,7 @@ sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 
 # Install required python packages
-sudo pip3 install argparse subprocess json sys
+sudo pip3 install argparse
 
 # Load AWS command database
 cat <<'EOF' > /home/ec2-user/aws_commands.json
@@ -86,6 +86,10 @@ EOF
 # Load AWS command database
 cat <<'EOF' > /home/ec2-user/aws_vpce_policy_tester.py
 ${tester_script}
+EOF
+
+cat <<'EOF' > /home/ec2-user/test_ec2_startup.sh
+${startup_script}
 EOF
 
 # Set the option description in the Python script
