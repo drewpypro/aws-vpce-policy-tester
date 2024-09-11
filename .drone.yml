@@ -12,7 +12,7 @@ clone:
 volumes:
   - name: terraform
     host:
-      path: /mnt/apppooldisk/devappdata/drone-runners
+      path: $environment/drone-runners
 
 steps:
 - name: create_directories
@@ -26,7 +26,7 @@ steps:
 # Optional: If you still want manual cloning
 - name: custom_clone
   image: docker:git
-  network_mode: br1.201
+  network_mode: br69.69
   volumes:
     - name: terraform
       path: /workspace/terraform
@@ -34,13 +34,13 @@ steps:
     - if [ -d /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/.git ]; then
         cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/ && git fetch && git reset --hard origin/main;
       else
-        git clone https://git.drewpy.pro/johnpshids/aws-vpce-policy-tester /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/;
+        git clone https://github.com/drewpnutz/aws-vpce-policy-tester.git /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/;
       fi
 
 # Run terraform init, plan, apply
 - name: terraform-plan
   image: hashicorp/terraform:latest
-  network_mode: br1.201
+  network_mode: br69.69
   volumes:
     - name: terraform
       path: /workspace/terraform
@@ -66,7 +66,7 @@ steps:
 
 - name: terraform-apply
   image: hashicorp/terraform:latest
-  network_mode: br1.201
+  network_mode: br69.69
   volumes:
     - name: terraform
       path: /workspace/terraform
