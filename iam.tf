@@ -61,6 +61,28 @@ resource "aws_iam_instance_profile" "test_instance_profile" {
   role = aws_iam_role.test_ec2_role.name
 }
 
+resource "aws_iam_role" "test_assume_role" {
+  name = "test_assume_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          AWS = aws_iam_role.test_ec2_role.arn
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "test_assume_policy_attachment" {
+  role       = aws_iam_role.test_assume_role.name
+  policy_arn = aws_iam_policy.test_ec2_policy.arn
+}
+
 # ## FLOW LOGS IAM
 
 # resource "aws_iam_role" "producer_flow_logs_role" {

@@ -89,7 +89,7 @@
     "sts": [
       "aws sts get-session-token",
       "aws sts get-caller-identity",
-      "aws sts assume-role --role-arn arn:aws:iam::VAR_ACCOUNT_ID:role/aws-service-role/ec2.amazonaws.com/AWSServiceRoleForEC2 --role-session-name bogus-session"      
+      "aws sts assume-role --role-arn arn:aws:iam::VAR_ACCOUNT_ID:role/test_assume_role --role-session-name test-session"      
     ]
   }
   
