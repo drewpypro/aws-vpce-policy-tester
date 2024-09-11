@@ -13,13 +13,7 @@ locals {
     5 = "DenyAll"
   }
 }
-    "${path.module}/policies/${
-      var.option == 1 ? "PrincipalOrgID-policy.json" :
-      var.option == 2 ? "PrincipalAccount-policy.json" :
-      var.option == 3 ? "PrincipalOrgPaths-policy.json" :
-      var.option == 4 ? "Resource-policy.json" :
-      var.option == 5 ? "broken_policy.json" :
-      "PrincipalOrgID-policy.json"
+
 # Define a list of services that need VPC endpoints
 variable "services" {
   default = ["autoscaling", "dms", "ec2", "ec2messages",
