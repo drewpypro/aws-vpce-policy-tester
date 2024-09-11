@@ -45,14 +45,18 @@ def test_services(service_commands, output_mode, option_desc):
 
     for service, commands in service_commands.items():
         message = f"\nTesting VPC Endpoint Policy for service: {service}"
+        # Always print to shell
         print(message)
+
         if output_mode in ['log', 'both']:
             log.write(message + "\n")
 
         for cmd in commands:
             result, verdict = run_aws_command(cmd)
             message = f"Command: {cmd}\nResult: {result}\nVerdict: {verdict}"
+            # Always print to shell
             print(message)
+
             if output_mode in ['log', 'both']:
                 log.write(message + "\n")
             if output_mode in ['report', 'both']:
@@ -69,9 +73,9 @@ def show_usage():
     Usage: python aws-vpce-policy-tester.py [OPTIONS]
 
     Options:
-    --log          Generate a full log file with $day/hour/minute-log.txt.
-    --report       Generate a CSV report with $day/hour/minute-report.csv (command, verdict, option description).
-    --both         Generate both log and report files.
+    --log          Generate a full log file with $day/hour/minute-log.txt. Also prints to shell!
+    --report       Generate a CSV report with $day/hour/minute-report.csv (command, verdict, option description). Also prints to shell!
+    --both         Generate both log and report files. Also prints to shell!
     --shell        Output only to the shell without writing any files.
     
     Examples:
@@ -99,10 +103,13 @@ def main():
     # Load the AWS CLI commands from the command database
     service_commands = load_service_commands()
 
-    option_desc = "OPTION_DESCRIPTION"
+    # Retrieve the option description from environment or other means
+    option_desc = "OPTION_DESCRIPTION"  # Populate this from the TF workspace or startup script
+
+    # Determine the output mode
     output_mode = 'log' if args.log else 'report' if args.report else 'both' if args.both else 'shell'
 
-    # Run tests and write to file if requested.
+    # Run tests and write to file if requested
     test_services(service_commands, output_mode, option_desc)
     print(f"Testing completed. Results have been written to {timestamp}.")
 

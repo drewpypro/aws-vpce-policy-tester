@@ -59,8 +59,8 @@ echo '[
   echo ""
   echo "Welcome to the VPC Endpoint Tester VM."
   echo "The Terraform Scripts built this to test Option${option} which configures ${option_description} as a condition in vpc endpoint policy."
-  echo "Use the following command to start the test and produce a report:"
-  echo "python3 aws_vpce_policy_tester.py --output report.txt"
+  echo "Use the following command to show usage:"
+  echo "python3 aws_vpce_policy_tester.py"
   echo ""
 } | sudo tee /usr/lib/motd.d/30-banner
 
