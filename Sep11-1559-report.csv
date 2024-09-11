@@ -44,13 +44,13 @@ aws secretsmanager get-random-password,Allowed by VPC Endpoint Policy,PrincipalO
 aws secretsmanager get-secret-value --secret-id bogus-secret-id,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws sns list-topics,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws sns create-topic --name bogus-topic,Allowed by VPC Endpoint Policy,PrincipalOrgID
-aws sns publish --topic-arn arn:aws:sns:us-east-1:${account_id}:bogus-topic --message 'Bogus message',Allowed by VPC Endpoint Policy,PrincipalOrgID
-aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:${account_id}:bogus-topic,Allowed by VPC Endpoint Policy,PrincipalOrgID
+aws sns publish --topic-arn arn:aws:sns:us-east-1:<ACCOUNT_ID>:bogus-topic --message 'Bogus message',Allowed by VPC Endpoint Policy,PrincipalOrgID
+aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:<ACCOUNT_ID>:bogus-topic,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws sqs list-queues,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws sqs create-queue --queue-name bogus-queue,Allowed by VPC Endpoint Policy,PrincipalOrgID
-aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/${account_id}/bogus-queue --message-body 'Bogus message',Allowed by VPC Endpoint Policy,PrincipalOrgID
-aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/${account_id}/bogus-queue,Allowed by VPC Endpoint Policy,PrincipalOrgID
-aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/${account_id}/bogus-queue,Allowed by VPC Endpoint Policy,PrincipalOrgID
+aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/<ACCOUNT_ID>/bogus-queue --message-body 'Bogus message',Allowed by VPC Endpoint Policy,PrincipalOrgID
+aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/<ACCOUNT_ID>/bogus-queue,Allowed by VPC Endpoint Policy,PrincipalOrgID
+aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/<ACCOUNT_ID>/bogus-queue,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws ssm list-commands,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws ssm describe-instance-information,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws ssm create-document --name bogus-document --content log-events.json,Allowed by VPC Endpoint Policy,PrincipalOrgID
@@ -60,4 +60,4 @@ aws ssm start-session --target bogus-instance-id --document-name ssmmessages:Cre
 aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws sts get-session-token,Allowed by VPC Endpoint Policy,PrincipalOrgID
 aws sts get-caller-identity,Allowed by VPC Endpoint Policy,PrincipalOrgID
-aws sts assume-role --role-arn arn:aws:iam::${account_id}:role/aws-service-role/ec2.amazonaws.com/AWSServiceRoleForEC2 --role-session-name bogus-session,Allowed by VPC Endpoint Policy,PrincipalOrgID
+aws sts assume-role --role-arn arn:aws:iam::<ACCOUNT_ID>:role/aws-service-role/ec2.amazonaws.com/AWSServiceRoleForEC2 --role-session-name bogus-session,Allowed by VPC Endpoint Policy,PrincipalOrgID
