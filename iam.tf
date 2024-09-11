@@ -57,7 +57,7 @@ resource "aws_iam_role_policy_attachment" "test_policy_attachment" {
 }
 
 resource "aws_iam_instance_profile" "test_instance_profile" {
-  name = "TestInstanceProfile"
+  name = "Test_EC2_InstanceProfile"
   role = aws_iam_role.test_ec2_role.name
 }
 
