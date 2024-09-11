@@ -18,7 +18,7 @@ def run_aws_command(command):
     try:
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         output = result.stdout if result.returncode == 0 else result.stderr
-        if "because no VPC endpoint policy allows" in output:
+        if "explicit deny in a VPC endpoint policy" in output:
             verdict = "Blocked by VPC Endpoint Policy"
         else:
             verdict = "Command Allowed by VPC Endpoint Policy"

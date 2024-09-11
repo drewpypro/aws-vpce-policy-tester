@@ -21,6 +21,21 @@ ASCII_ART='  ______   __       __   ______
 | $$  | $$| $$$    \$$$ \$$    $$
  \$$   \$$ \$$      \$$  \$$$$$$ '
 
+
+# Create the key.json file for the DynamoDB get-item command
+echo '{
+  "id": {
+    "S": "bogus"
+  }
+}' > /home/ec2-user/key.json
+
+# Create the item.json file for the DynamoDB put-item command
+echo '{
+  "id": {
+    "S": "bogus"
+  }
+}' > /home/ec2-user/item.json
+
 # Create the new banner content directly into the file
 {
   echo ""

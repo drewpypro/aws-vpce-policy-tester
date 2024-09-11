@@ -16,10 +16,12 @@ locals {
 
 # Define a list of services that need VPC endpoints
 variable "services" {
-  default = ["s3", "dms", "dynamodb", "ec2messages", "elasticloadbalancing", 
-             "sns", "ssm", "ssmmessages", "sts", "autoscaling", "monitoring", 
-             "rds", "sqs", "secretsmanager"]
+  default = ["autoscaling", "dms", "ec2", "ec2messages", 
+             "elasticloadbalancing", "logs", "monitoring", "rds", 
+             "secretsmanager", "sns", "sqs", "ssm", 
+             "ssmmessages", "sts"]
 }
+
 
 variable "gateway_services" {
   default = ["dynamodb", "s3"]

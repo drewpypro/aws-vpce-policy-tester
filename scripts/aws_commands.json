@@ -5,7 +5,7 @@
       "aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg"
   ],
     "dms": [
-        "aws dms list-tags-for-resource --resource-arn bogus-arn",
+        "aws dms list-tags-for-resource",
         "aws dms describe-endpoints",
         "aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234", 
         "aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn"
@@ -15,8 +15,8 @@
       "aws dynamodb describe-endpoints",
       "aws dynamodb create-table --table-name bogus-table --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5",
       "aws dynamodb delete-table --table-name bogus-table",
-      "aws dynamodb get-item --table-name bogus-table --key '{\"id\": {\"S\": \"bogus\"}}'",
-      "aws dynamodb put-item --table-name bogus-table --item '{\"id\": {\"S\": \"bogus\"}}'"
+      "aws dynamodb get-item --table-name bogus-table --key file:///home/ec2-user/key.json",
+      "aws dynamodb put-item --table-name bogus-table --item file:///home/ec2-user/item.json"
     ],
     "ec2": [
       "aws ec2 list-snapshots-in-recycle-bin",
