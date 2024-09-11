@@ -88,7 +88,11 @@ steps:
     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
     - terraform apply -auto-approve
   when:
-    - action != "destroy"
+    conditions:
+      event:
+        - push
+      action:
+        - apply
 
 # Run terraform destroy if the action parameter is 'destroy'
 - name: terraform-destroy
@@ -116,7 +120,9 @@ steps:
     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
     - terraform destroy -auto-approve
   when:
-    action == "destroy"
+    conditions:
+      action:
+        - destroy
 
 trigger:
   branch:
