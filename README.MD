@@ -20,7 +20,7 @@ TO DO:
 -create s3 private endpoint testing
 -generate report output in s3
 -create resources to complete commands
-
+-wait between commands
 
 ## Issues
 

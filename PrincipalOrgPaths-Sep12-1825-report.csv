@@ -44,13 +44,13 @@ aws secretsmanager get-random-password,Denied by VPC Endpoint Policy,PrincipalOr
 aws secretsmanager get-secret-value --secret-id bogus-secret-id,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws sns list-topics,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws sns create-topic --name bogus-topic,Denied by VPC Endpoint Policy,PrincipalOrgPaths
-aws sns publish --topic-arn arn:aws:sns:us-east-1:602484972838:bogus-topic --message 'Bogus message',Denied by VPC Endpoint Policy,PrincipalOrgPaths
-aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:602484972838:bogus-topic,Denied by VPC Endpoint Policy,PrincipalOrgPaths
+aws sns publish --topic-arn arn:aws:sns:us-east-1:<account_id>:bogus-topic --message 'Bogus message',Denied by VPC Endpoint Policy,PrincipalOrgPaths
+aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:<account_id>:bogus-topic,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws sqs list-queues,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws sqs create-queue --queue-name bogus-queue,Denied by VPC Endpoint Policy,PrincipalOrgPaths
-aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/602484972838/bogus-queue --message-body 'Bogus message',Queue does not exist,PrincipalOrgPaths
-aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/602484972838/bogus-queue,Queue does not exist,PrincipalOrgPaths
-aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/602484972838/bogus-queue,Queue does not exist,PrincipalOrgPaths
+aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/<account_id>/bogus-queue --message-body 'Bogus message',Queue does not exist,PrincipalOrgPaths
+aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/<account_id>/bogus-queue,Queue does not exist,PrincipalOrgPaths
+aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/<account_id>/bogus-queue,Queue does not exist,PrincipalOrgPaths
 aws ssm list-commands,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws ssm describe-instance-information,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws ssm create-document --name bogus-document --content log-events.json,Denied by VPC Endpoint Policy,PrincipalOrgPaths
@@ -60,4 +60,4 @@ aws ssm start-session --target bogus-instance-id --document-name ssmmessages:Cre
 aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws sts get-session-token,Denied by VPC Endpoint Policy,PrincipalOrgPaths
 aws sts get-caller-identity,Denied by VPC Endpoint Policy,PrincipalOrgPaths
-aws sts assume-role --role-arn arn:aws:iam::602484972838:role/test_assume_role --role-session-name test-session,Allowed by VPC Endpoint Policy,PrincipalOrgPaths
+aws sts assume-role --role-arn arn:aws:iam::<account_id>:role/test_assume_role --role-session-name test-session,Allowed by VPC Endpoint Policy,PrincipalOrgPaths

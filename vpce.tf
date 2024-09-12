@@ -1,3 +1,26 @@
+# Check hash of files if they change then trigger policy change. 
+resource "null_resource" "policy_trigger" {
+  triggers = {
+    policy = filemd5("${path.module}/policies/${var.option == 1 ? "PrincipalOrgID-policy.json" :
+      var.option == 2 ? "PrincipalAccount-policy.json" :
+      var.option == 3 ? "PrincipalOrgPaths-policy.json" :
+      var.option == 4 ? "Resource-policy.json" :
+      var.option == 5 ? "broken_policy.json" :
+      "PrincipalOrgID-policy.json"}")
+  }
+}
+
+resource "null_resource" "s3_policy_trigger" {
+  triggers = {
+    policy = filemd5("${path.module}/policies/s3/${var.option == 1 ? "PrincipalOrgID-policy.json" :
+      var.option == 2 ? "PrincipalAccount-policy.json" :
+      var.option == 3 ? "PrincipalOrgPaths-policy.json" :
+      var.option == 4 ? "Resource-policy.json" :
+      var.option == 5 ? "broken_policy.json" :
+      "PrincipalOrgID-policy.json"}")
+  }
+}
+
 # Create VPC Endpoints for each service, referencing the correct policy file based on the selected option
 resource "aws_vpc_endpoint" "service_vpc_endpoints" {
   for_each            = toset(var.services)
@@ -26,6 +49,8 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
 
   security_group_ids = [aws_security_group.test_privatelink_sg.id]
   subnet_ids         = [aws_subnet.endpoint_subnet.id]
+
+  depends_on = [null_resource.policy_trigger]
 }
 
 # Gateway Endpoints for S3 and RDS
@@ -53,4 +78,6 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
       region       = var.region
     }
   )
+
+  depends_on = [null_resource.s3_policy_trigger]
 }

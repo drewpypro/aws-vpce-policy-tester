@@ -8,7 +8,7 @@
         "Resource": "*",
         "Condition": {
           "ForAnyValue:StringLike": {
-            "aws:PrincipalOrgPaths": ["${org_path}/*"]
+            "aws:PrincipalOrgPaths": ["${org_path}*"]
           }
         }
       }
