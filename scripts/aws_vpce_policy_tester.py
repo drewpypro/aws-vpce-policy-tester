@@ -48,7 +48,7 @@ def test_services(service_commands, output_mode, option_desc):
         writer.writerow(["Command", "Verdict", "Option Description"])
 
     for service, commands in service_commands.items():
-        message = f"\nTesting VPC Endpoint Policy for service: {service}"
+        message = f"\nTesting VPC Endpoint Policy configured with OPTION_DESCRIPTION for service: {service}"
         print(message)
         if output_mode in ['log', 'both']:
             log.write(message + "\n")
@@ -108,7 +108,7 @@ def main():
 
     # Run tests and write to file if requested.
     test_services(service_commands, output_mode, option_desc)
-    print(f"Testing completed. Results have been written to {timestamp}.")
+    print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to {timestamp}.")
 
 if __name__ == "__main__":
     main()
