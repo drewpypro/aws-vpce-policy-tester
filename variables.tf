@@ -1,7 +1,7 @@
 variable "option" {
   type        = number
   description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (ResourceRestriction), 4 (OU-Path) or 5 (Deny All)"
-  default     = 4 
+  default     = 3 
 }
 
 locals {
