@@ -38,11 +38,11 @@ timestamp = datetime.datetime.now().strftime("%b%d-%H%M")
 # Function to test services and write results to file
 def test_services(service_commands, output_mode, option_desc):
     if output_mode in ['log', 'both']:
-        log_file = f"{timestamp}-log.txt"
+        log_file = f"OPTION_DESCRIPTION-{timestamp}-log.txt"
         log = open(log_file, 'w')
 
     if output_mode in ['report', 'both']:
-        report_file = f"{timestamp}-report.csv"
+        report_file = f"OPTION_DESCRIPTION-{timestamp}-report.csv"
         report = open(report_file, 'w', newline='')
         writer = csv.writer(report)
         writer.writerow(["Command", "Verdict", "Option Description"])
