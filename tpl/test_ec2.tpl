@@ -88,7 +88,7 @@ cat <<'EOF' > /home/ec2-user/aws_vpce_policy_tester.py
 ${tester_script}
 EOF
 
-cat <<'EOF' > /home/ec2-user/test_ec2_startup.sh
+cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
 ${startup_script}
 EOF
 
