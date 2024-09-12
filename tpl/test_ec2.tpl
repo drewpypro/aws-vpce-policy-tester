@@ -25,10 +25,8 @@ cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
 ${startup_script}
 EOF
 
-echo "export OPTION_DESCRIPTION=${option_description}" 
-
 # Set the option description in the Python script
-sed -i 's/OPTION_DESCRIPTION/$OPTION_DESCRIPTION/' /home/ec2-user/aws_vpce_policy_tester.py
+sed -i "s/OPTION_DESCRIPTION/${option_description}/" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i 's/VAR_ACCOUNT_ID/${account_id}/' /home/ec2-user/aws_commands.json
 
 sudo chmod +x /usr/local/bin/test_ec2_startup.sh
