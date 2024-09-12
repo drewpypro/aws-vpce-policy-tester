@@ -10,6 +10,28 @@ sudo rm /usr/lib/motd.d/20-*  # Remove any other MOTD scripts
 
 sudo sed -i 's/#PrintLastLog yes/PrintLastLog no/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
+
+# Load AWS command database
+cat <<'EOF' > /home/ec2-user/aws_commands.json
+${aws_commands}
+EOF
+
+# Load python script
+cat <<'EOF' > /home/ec2-user/aws_vpce_policy_tester.py
+${tester_script}
+EOF
+
+cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
+${startup_script}
+EOF
+
+# Set the option description in the Python script
+sed -i 's/OPTION_DESCRIPTION/${option_description}/' /home/ec2-user/aws_vpce_policy_tester.py
+sed -i 's/VAR_ACCOUNT_ID/${account_id}/' /home/ec2-user/aws_commands.json
+
+sudo chmod +x /usr/local/bin/test_ec2_startup.sh
+sudo /usr/local/bin/test_ec2_startup.sh
+
                                 
 ASCII_ART='  ______   __       __   ______  
  /      \ |  \  _  |  \ /      \ 
@@ -76,26 +98,5 @@ sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 
 # Install required python packages
-sudo pip3 install argparse
-
-# Load AWS command database
-cat <<'EOF' > /home/ec2-user/aws_commands.json
-${aws_commands}
-EOF
-
-# Load AWS command database
-cat <<'EOF' > /home/ec2-user/aws_vpce_policy_tester.py
-${tester_script}
-EOF
-
-cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
-${startup_script}
-EOF
-
-# Set the option description in the Python script
-sed -i 's/OPTION_DESCRIPTION/${option_description}/' /home/ec2-user/aws_vpce_policy_tester.py
-sed -i 's/VAR_ACCOUNT_ID/${account_id}/' /home/ec2-user/aws_commands.json
-
-sudo chmod +x /usr/local/bin/test_ec2_startup.sh
-sudo /usr/local/bin/test_ec2_startup.sh
+pip3 install argparse
 
