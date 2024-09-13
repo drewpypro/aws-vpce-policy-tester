@@ -108,7 +108,7 @@ def main():
 
     # Run tests and write to file if requested.
     test_services(service_commands, output_mode, option_desc)
-    print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to OPTION_DESCRIPTION-{timestamp}.txt and report to OPTION_DESCRIPTION-{timestamp}.csv")
+    print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to "OPTION_DESCRIPTION-{timestamp}.txt" and report to "OPTION_DESCRIPTION-{timestamp}.csv"")
 
 if __name__ == "__main__":
     main()
