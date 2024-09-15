@@ -24,6 +24,7 @@ resource "aws_instance" "test_ec2" {
   user_data = templatefile("tpl/test_ec2.tpl", {
     public_key         = var.public_key
     account_id         = var.account_id
+    source_ssh_network = var.source_ssh_network
     startup_script     = file("${path.module}/scripts/test_ec2_startup.sh")
     aws_commands       = file("${path.module}/scripts/aws_commands.json")
     tester_script      = file("${path.module}/scripts/aws_vpce_policy_tester.py")

@@ -21,7 +21,7 @@ def run_aws_command(command):
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         output = result.stdout if result.returncode == 0 else result.stderr
 
-        sanitized_output = output.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
+        sanitized_output = output.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]").replace("source_ssh_network", "[PUBLIC_SSH_IP]")
 
         if "AWS.SimpleQueueService.NonExistentQueue" in sanitized_output:
             verdict = "Queue does not exist"

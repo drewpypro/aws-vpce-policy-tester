@@ -25,6 +25,7 @@ cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
 ${startup_script}
 EOF
 
+sed -i "s|source_ssh_network|${source_ssh_network}|g" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i "s|OPTION_DESCRIPTION|${option_description}|g" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_commands.json
