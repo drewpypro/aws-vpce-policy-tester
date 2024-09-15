@@ -1,9 +1,11 @@
 # AWS-VPCE-Policy-Tester
 - [Overview](#overview)
   - [Key Features](#key-features)
-  - [Architecture Overview](#architecture-overview)
   - [Project Structure](#project-structure)
+  - [Important Notes](#important-notes)
+  - [Considerations](#considerations)
   - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
   - [Usage](#usage)
   - [Vulnerability Patterns (WIP)](#vulnerability-patterns-wip)
   - [Prevent, React, Detect Patterns (WIP)](#prevent-react-detect-patterns-wip)
@@ -17,11 +19,11 @@
     - [Malicious File](#malicious-file)
 - [Conclusion](#conclusion)
 
-![AWS VPC Endpoint Policy Tester](img/aws-vpce-policy-tester.png)
+![AWS VPC Endpoint Policy Tester](img/aws-vpce-policy-tester-highlevel.png)
 
 This repository contains Terraform configuration files and various scripts for setting up a test environment to test vpc endpoint policy with privatelink services.
 
-## Overview
+# Overview
 
 I haven't previously tested VPC endpoint policies in depth, but I understand their importance in controlling access to AWS services and mitigating risks. My goal was to deepen my knowledge of AWS services that I'm familiar with, specifically focusing on creating restrictive policies to reduce the attack surface within a secure environment. This process is challenging due to the varying requirements of different APIs. This repository was built to bridge the gap in my understanding and generate outputs to effectively test allow and deny controls in VPC endpoint policies.
 
@@ -37,7 +39,7 @@ I haven't previously tested VPC endpoint policies in depth, but I understand the
 - Assists in building and refining VPC endpoint policies
 - Provides insights into API-specific behavior with VPC endpoint policies
 
-# Project Structure
+## Project Structure
 ```
 aws-vpce-policy-tester/
 ├── img/
@@ -96,7 +98,7 @@ aws-vpce-policy-tester/
 
 2. Select which option you want to test in variables.tf
 variables.tf
-   ```c
+   ```sh
    variable "option" {
         type        = number
         description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (ResourceRestriction), 4 (OU-Path) or 5 (Deny All)"
@@ -104,11 +106,11 @@ variables.tf
         }
     ```
 
-
 3. Generate an ssh key and store the public key in your environment variables (below)
 
 
 4. Set up your AWS credentials:
+
    ```powershell
    $env:AWS_ACCESS_KEY_ID="your_access_key"
    $env:AWS_SECRET_ACCESS_KEY="your_secret_key"
@@ -118,7 +120,8 @@ variables.tf
    $env:TF_VAR_source_ssh_net="your_ssh_ip"
    $env:TF_VAR_public_key="your_public_ssh_key"
    ```
-   ```bash
+
+   ```sh
    export AWS_ACCESS_KEY_ID="your_access_key"
    export AWS_SECRET_ACCESS_KEY="your_secret_key"
    export TF_VAR_org_id="your_org_id"
@@ -128,16 +131,17 @@ variables.tf
    export TF_VAR_public_key="your_public_ssh_key"
    ```
 
-3. Run Terraform:
+5. Run Terraform:
    ```powershell
    terraform init
    terraform apply
    ```
 
-
 ## Usage
 
-After installation, you can run the VPC Endpoint Policy Tester using:
+ - After resources are created, ssh into your instace via the provided output for the elastic IP. 
+ - Make sure to SSH using your public key you created earlier. 
+ - Once you are logged in, you can run the VPC Endpoint Policy Tester using:
 
 ```bash
 python aws_vpce_policy_tester.py [OPTIONS]

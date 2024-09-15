@@ -51,7 +51,7 @@ resource "aws_iam_role" "test_ec2_role" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          AWS = aws_iam_role.test_assume_role.arn
+          AWS = "arn:aws:iam::${var.account_id}:role/test_assume_role"
         }
       }
     ]
@@ -77,7 +77,7 @@ resource "aws_iam_role" "test_assume_role" {
       {
         Effect = "Allow"
         Principal = {
-          AWS = aws_iam_role.test_ec2_role.arn
+          AWS = "arn:aws:iam::${var.account_id}:role/Test_ec2_Role"
         }
         Action = "sts:AssumeRole"
       }
