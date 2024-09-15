@@ -51,7 +51,7 @@ resource "aws_iam_role" "test_ec2_role" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          AWS = aws_iam_role.test_ec2_role.arn
+          AWS = aws_iam_role.test_assume_role.arn
         }
       }
     ]
