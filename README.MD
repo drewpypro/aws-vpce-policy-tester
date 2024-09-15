@@ -22,18 +22,25 @@ TO DO:
 -create resources to complete commands
 -wait between commands
 
-## Issues
-
+## Issues with these commands working in deny tests
     ```
     monitoring
-        // "aws cloudwatch list-tags-for-resource --resource-arn bogus-resource-arn",
-        // "aws cloudwatch get-metric-data --metric-data-queries bogus-query"
+        "aws cloudwatch list-tags-for-resource --resource-arn bogus-resource-arn", // Requires building cloudwatch resources?
+        // "aws cloudwatch get-metric-data --metric-data-queries bogus-query" // Requires building cloudwatch resources?
     logs
-        // "aws logs list-tags-for-resource --resource-arn bogus-log-arn",
+        // "aws logs list-tags-for-resource --resource-arn bogus-log-arn", // Requires building cloudtrail resources?
     rds
-        // "aws rds list-tags-for-resource --resource-name bogus-db-instance",
+        // "aws rds list-tags-for-resource --resource-name bogus-db-instance", 
     s3
         // "aws s3 rb s3://bogus-bucket", remove_bucket failed: s3://test An error occurred (AccessDenied) when calling the DeleteBucket operation: Access Denied
         // "aws s3api get-object --bucket bogus-bucket --key bogus-key /tmp/bogus-file",
         // "aws s3api put-object --bucket bogus-bucket --key bogus-key --body /tmp/bogus-file"
+    ```
+
+## These commands are working, but the delete commands aren't. 
+    ```
+    "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name invalid-config --min-size 1 --max-size 1"
+    "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name --invalid-config foo ",
+    "aws dms create-endpoint --endpoint-identifier bogus-endpoint --invalid-config foo", 
+    "aws secretsmanager create-secret --name bogus-secret --secret-string bogus-string --invalid-config foo",
     ```

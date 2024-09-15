@@ -1,11 +1,11 @@
 {
   "autoscaling": [
-      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name invalid-config --min-size 1 --max-size 1",
+      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name --invalid-config foo ",
       "aws autoscaling describe-auto-scaling-groups",
       "aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg"
   ],
     "dms": [
-        "aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234", 
+        "aws dms create-endpoint --endpoint-identifier bogus-endpoint --invalid-config foo", 
         "aws dms describe-endpoints",
         "aws dms list-tags-for-resource",
         "aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn"
@@ -55,7 +55,7 @@
       "aws s3 mb s3://bogus-bucket"
     ],
     "secretsmanager": [
-      "aws secretsmanager create-secret --name bogus-secret --secret-string bogus-string",
+      "aws secretsmanager create-secret --name bogus-secret --secret-string bogus-string --invalid-config foo",
       "aws secretsmanager list-secrets",
       "aws secretsmanager describe-secret --secret-id bogus-secret",
       "aws secretsmanager delete-secret --secret-id bogus-secret-id",
