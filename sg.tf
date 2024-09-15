@@ -9,7 +9,7 @@ resource "aws_security_group" "test_ec2_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.source_ssh_network]
+    cidr_blocks = [var.source_ssh_net]
   }
 
   egress {

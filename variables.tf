@@ -72,7 +72,7 @@ variable "instance_type" {
   default     = "c4.large"
 }
 
-variable "source_ssh_network" {
+variable "source_ssh_net" {
   description = "Public IP to SSH to consumer ec2"
   type        = string
 }

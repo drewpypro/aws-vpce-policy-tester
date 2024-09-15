@@ -24,7 +24,7 @@ def run_aws_command(command):
 
         # Scrub account ID and other sensitive information
         sanitized_output = output.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
-        sanitized_output = sanitized_output.replace("source_ssh_network", "[PUBLIC_SSH_IP]")
+        sanitized_output = sanitized_output.replace("source_ssh_net", "[PUBLIC_SSH_IP]")
         # Obfuscate sensitive credentials in the result
         sanitized_output = re.sub(r'"AccessKeyId":\s*"[^"]+"', '"AccessKeyId": "[REDACTED]"', sanitized_output)
         sanitized_output = re.sub(r'"SecretAccessKey":\s*"[^"]+"', '"SecretAccessKey": "[REDACTED]"', sanitized_output)
@@ -120,7 +120,7 @@ def main():
 
     # Run tests and write to file if requested.
     test_services(service_commands, output_mode, option_desc)
-    print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to OPTION_DESCRIPTION-{timestamp}.txt and report to OPTION_DESCRIPTION-{timestamp}.csv")
+    print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to OPTION_DESCRIPTION-{timestamp}-log.txt and report to OPTION_DESCRIPTION-{timestamp}-report.csv")
 
 if __name__ == "__main__":
     main()

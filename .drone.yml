@@ -56,8 +56,8 @@ steps:
       from_secret: TF_VAR_org_path
     TF_VAR_account_id:
       from_secret: TF_VAR_account_id
-    TF_VAR_source_ssh_network:
-      from_secret: TF_VAR_source_ssh_network
+    TF_VAR_source_ssh_net:
+      from_secret: TF_VAR_source_ssh_net
     TF_VAR_public_key:
       from_secret: TF_VAR_public_key
   commands:
@@ -82,8 +82,8 @@ steps:
       from_secret: TF_VAR_org_path
     TF_VAR_account_id:
       from_secret: TF_VAR_account_id
-    TF_VAR_source_ssh_network:
-      from_secret: TF_VAR_source_ssh_network
+    TF_VAR_source_ssh_net:
+      from_secret: TF_VAR_source_ssh_net
     TF_VAR_public_key:
       from_secret: TF_VAR_public_key
   commands:
@@ -108,8 +108,8 @@ steps:
 #       from_secret: TF_VAR_org_path
 #     TF_VAR_account_id:
 #       from_secret: TF_VAR_account_id
-#     TF_VAR_source_ssh_network:
-#       from_secret: TF_VAR_source_ssh_network
+#     TF_VAR_source_ssh_net:
+#       from_secret: TF_VAR_source_ssh_net
 #     TF_VAR_public_key:
 #       from_secret: TF_VAR_public_key
 #   commands:
