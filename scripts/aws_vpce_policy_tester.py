@@ -5,6 +5,7 @@ import sys
 import csv
 import datetime
 import re
+import time
 
 # Load AWS CLI command database
 def load_service_commands():
@@ -115,7 +116,7 @@ def main():
         sys.exit(0)
 
     # Record the start time
-    start_time = datetime.now()
+    start_time = datetime.datetime.now()
 
     # Load the AWS CLI commands from the command database
     service_commands = load_service_commands()
@@ -127,7 +128,11 @@ def main():
     test_services(service_commands, output_mode, option_desc)
     
     #Record the end time
+    end_time = datetime.datetime.now()
+    
+    #Calculate elapsed time
     elaspsed_time = end_time - start_time
+    
     print(f"Elapsed time: {elaspsed_time}")    
     print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to OPTION_DESCRIPTION-{timestamp}-log.txt and report to OPTION_DESCRIPTION-{timestamp}-report.csv")
 
