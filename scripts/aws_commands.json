@@ -1,6 +1,6 @@
 {
   "autoscaling": [
-      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name --invalid-config foo ",
+      "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --invalid-config foo ",
       "aws autoscaling describe-auto-scaling-groups",
       "aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg"
   ],
