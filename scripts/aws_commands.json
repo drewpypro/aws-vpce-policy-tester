@@ -1,13 +1,13 @@
 {
   "autoscaling": [
       "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-asg --min-size 1 --max-size 1",
-      "sleep 30",
+      "sleep 30 && echo sleep",
       "aws autoscaling describe-auto-scaling-groups",
       "aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg"
   ],
     "dms": [
         "aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234", 
-        "sleep 30",
+        "sleep 30 && echo sleep",
         "aws dms describe-endpoints",
         "aws dms list-tags-for-resource",
         "aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn"
@@ -41,7 +41,7 @@
     ],
     "logs": [
       "aws logs create-log-group --log-group-name bogus-log-group",
-      "sleep 30",
+      "sleep 30 && echo sleep",
       "aws logs describe-log-groups",
       "aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events file://log-events.json",
       "aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream",
@@ -69,14 +69,14 @@
     ],
     "sns": [
       "aws sns create-topic --name bogus-topic",
-      "sleep 30",
+      "sleep 30 && echo sleep",
       "aws sns list-topics",
       "aws sns publish --topic-arn arn:aws:sns:us-east-1:VAR_ACCOUNT_ID:bogus-topic --message 'Bogus message'",
       "aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:VAR_ACCOUNT_ID:bogus-topic"
     ],
     "sqs": [
       "aws sqs create-queue --queue-name bogus-queue",
-      "sleep 30",
+      "sleep 30 && echo sleep",
       "aws sqs list-queues",
       "aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/VAR_ACCOUNT_ID/bogus-queue --message-body 'Bogus message'",
       "aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/VAR_ACCOUNT_ID/bogus-queue",
@@ -86,7 +86,7 @@
       "aws ssm list-commands",
       "aws ssm describe-instance-information",
       "aws ssm create-document --name bogus-document --content log-events.json",
-      "sleep 30",
+      "sleep 30 && echo sleep",
       "aws ssm get-parameter --name bogus-parameter",
       "aws ssm send-command --document-name bogus-document --targets file://targets.json",
       "aws ssm delete-document --name bogus-document"
