@@ -39,7 +39,7 @@ def run_aws_command(command):
         else:
             verdict = "Allowed by VPC Endpoint Policy"
         return sanitized_output, verdict
-        
+
     except Exception as e:
         return f"Error running command: {command}\n{str(e)}", "Error"
 
@@ -65,13 +65,14 @@ def test_services(service_commands, output_mode, option_desc):
             log.write(message + "\n")
 
         for cmd in commands:
+            scrubbed_command = cmd.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
             result, verdict = run_aws_command(cmd)
-            message = f"Command: {cmd}\nResult: {result}\nVerdict: {verdict}"
+            message = f"Command: {scrubbed_cmd}\nResult: {result}\nVerdict: {verdict}"
             print(message)
             if output_mode in ['log', 'both']:
                 log.write(message + "\n")
             if output_mode in ['report', 'both']:
-                writer.writerow([cmd, verdict, option_desc])
+                writer.writerow([scrubbed_cmd, verdict, option_desc])
 
     if output_mode in ['log', 'both']:
         log.close()
