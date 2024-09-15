@@ -65,7 +65,7 @@ def test_services(service_commands, output_mode, option_desc):
             log.write(message + "\n")
 
         for cmd in commands:
-            scrubbed_command = cmd.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
+            scrubbed_cmd = cmd.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
             result, verdict = run_aws_command(cmd)
             message = f"Command: {scrubbed_cmd}\nResult: {result}\nVerdict: {verdict}"
             print(message)
