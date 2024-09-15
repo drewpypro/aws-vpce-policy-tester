@@ -20,15 +20,18 @@ def run_aws_command(command):
     try:
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         output = result.stdout if result.returncode == 0 else result.stderr
-        if "AWS.SimpleQueueService.NonExistentQueue" in output:
+
+        sanitized_output = output.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
+
+        if "AWS.SimpleQueueService.NonExistentQueue" in sanitized_output:
             verdict = "Queue does not exist"
-        elif "explicit deny in a VPC endpoint policy" in output:
+        elif "explicit deny in a VPC endpoint policy" in sanitized_output:
             verdict = "Denied by VPC Endpoint Policy"
-        elif "because no VPC endpoint policy" in output:
+        elif "because no VPC endpoint policy" in sanitized_output:
             verdict = "Denied by VPC Endpoint Policy"
         else:
             verdict = "Allowed by VPC Endpoint Policy"
-        return output, verdict
+        return sanitized_output, verdict
     except Exception as e:
         return f"Error running command: {command}\n{str(e)}", "Error"
 

@@ -25,9 +25,6 @@ cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
 ${startup_script}
 EOF
 
-# Add vars to /etc/profile for all users
-echo "export OPTION_DESCRIPTION=${option_description}" | sudo tee -a /etc/profile
-
 sed -i "s|OPTION_DESCRIPTION|${option_description}|g" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_commands.json
 
