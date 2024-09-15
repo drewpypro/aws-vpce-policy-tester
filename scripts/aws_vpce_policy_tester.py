@@ -36,6 +36,8 @@ def run_aws_command(command):
             verdict = "Denied by VPC Endpoint Policy"
         elif "because no VPC endpoint policy" in sanitized_output:
             verdict = "Denied by VPC Endpoint Policy"
+        elif "sleep" in sanitized_output:
+            verdict = "Sleep Command"
         else:
             verdict = "Allowed by VPC Endpoint Policy"
         return sanitized_output, verdict
@@ -112,6 +114,9 @@ def main():
         show_usage()
         sys.exit(0)
 
+    # Record the start time
+    start_time = datetime.now()
+
     # Load the AWS CLI commands from the command database
     service_commands = load_service_commands()
 
@@ -120,6 +125,10 @@ def main():
 
     # Run tests and write to file if requested.
     test_services(service_commands, output_mode, option_desc)
+    
+    #Record the end time
+    elaspsed_time = end_time - start_time
+    print(f"Elapsed time: {elaspsed_time}")    
     print(f"Testing of the OPTION_DESCRIPTION condition completed. Results have been written to OPTION_DESCRIPTION-{timestamp}-log.txt and report to OPTION_DESCRIPTION-{timestamp}-report.csv")
 
 if __name__ == "__main__":
