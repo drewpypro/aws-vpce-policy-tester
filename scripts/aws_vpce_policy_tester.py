@@ -4,6 +4,7 @@ import json
 import sys
 import csv
 import datetime
+import re
 
 # Load AWS CLI command database
 def load_service_commands():
@@ -21,7 +22,13 @@ def run_aws_command(command):
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         output = result.stdout if result.returncode == 0 else result.stderr
 
-        sanitized_output = output.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]").replace("source_ssh_network", "[PUBLIC_SSH_IP]")
+        # Scrub account ID and other sensitive information
+        sanitized_output = output.replace("VAR_ACCOUNT_ID", "[ACCOUNT_ID]")
+        sanitized_output = sanitized_output.replace("source_ssh_network", "[PUBLIC_SSH_IP]")
+        # Obfuscate sensitive credentials in the result
+        sanitized_output = re.sub(r'"AccessKeyId":\s*"[^"]+"', '"AccessKeyId": "[REDACTED]"', sanitized_output)
+        sanitized_output = re.sub(r'"SecretAccessKey":\s*"[^"]+"', '"SecretAccessKey": "[REDACTED]"', sanitized_output)
+        sanitized_output = re.sub(r'"SessionToken":\s*"[^"]+"', '"SessionToken": "[REDACTED]"', sanitized_output)
 
         if "AWS.SimpleQueueService.NonExistentQueue" in sanitized_output:
             verdict = "Queue does not exist"
@@ -32,6 +39,7 @@ def run_aws_command(command):
         else:
             verdict = "Allowed by VPC Endpoint Policy"
         return sanitized_output, verdict
+        
     except Exception as e:
         return f"Error running command: {command}\n{str(e)}", "Error"
 
