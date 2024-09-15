@@ -93,7 +93,6 @@ resource "aws_iam_role_policy_attachment" "test_assume_policy_attachment" {
 ## FLOW LOGS IAM
 
 resource "aws_iam_role" "producer_flow_logs_role" {
-  provider = aws.producer
   name     = "flow-logs-role"
 
   assume_role_policy = jsonencode({
@@ -111,7 +110,6 @@ resource "aws_iam_role" "producer_flow_logs_role" {
 }
 
 resource "aws_iam_policy" "producer_flow_logs_policy" {
-  provider = aws.producer
   name     = "flow-logs-policy"
 
   policy = jsonencode({
@@ -130,7 +128,6 @@ resource "aws_iam_policy" "producer_flow_logs_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "producer_flow_logs_role_attachment" {
-  provider   = aws.producer
   role       = aws_iam_role.producer_flow_logs_role.name
   policy_arn = aws_iam_policy.producer_flow_logs_policy.arn
 }
