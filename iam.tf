@@ -46,6 +46,13 @@ resource "aws_iam_role" "test_ec2_role" {
         Principal = {
           Service = "ec2.amazonaws.com"
         }
+      },
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          AWS = aws_iam_role.test_ec2_role.arn
+        }
       }
     ]
   })
@@ -83,47 +90,47 @@ resource "aws_iam_role_policy_attachment" "test_assume_policy_attachment" {
   policy_arn = aws_iam_policy.test_ec2_policy.arn
 }
 
-# ## FLOW LOGS IAM
+## FLOW LOGS IAM
 
-# resource "aws_iam_role" "producer_flow_logs_role" {
-#   provider = aws.producer
-#   name     = "flow-logs-role"
+resource "aws_iam_role" "producer_flow_logs_role" {
+  provider = aws.producer
+  name     = "flow-logs-role"
 
-#   assume_role_policy = jsonencode({
-#     Version = "2012-10-17",
-#     Statement = [
-#       {
-#         Action = "sts:AssumeRole",
-#         Effect = "Allow",
-#         Principal = {
-#           Service = "vpc-flow-logs.amazonaws.com",
-#         },
-#       },
-#     ],
-#   })
-# }
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "vpc-flow-logs.amazonaws.com",
+        },
+      },
+    ],
+  })
+}
 
-# resource "aws_iam_policy" "producer_flow_logs_policy" {
-#   provider = aws.producer
-#   name     = "flow-logs-policy"
+resource "aws_iam_policy" "producer_flow_logs_policy" {
+  provider = aws.producer
+  name     = "flow-logs-policy"
 
-#   policy = jsonencode({
-#     Version = "2012-10-17",
-#     Statement = [
-#       {
-#         Action = [
-#           "logs:CreateLogStream",
-#           "logs:PutLogEvents",
-#         ],
-#         Effect   = "Allow",
-#         Resource = "*",
-#       },
-#     ],
-#   })
-# }
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+        ],
+        Effect   = "Allow",
+        Resource = "*",
+      },
+    ],
+  })
+}
 
-# resource "aws_iam_role_policy_attachment" "producer_flow_logs_role_attachment" {
-#   provider   = aws.producer
-#   role       = aws_iam_role.producer_flow_logs_role.name
-#   policy_arn = aws_iam_policy.producer_flow_logs_policy.arn
-# }
+resource "aws_iam_role_policy_attachment" "producer_flow_logs_role_attachment" {
+  provider   = aws.producer
+  role       = aws_iam_role.producer_flow_logs_role.name
+  policy_arn = aws_iam_policy.producer_flow_logs_policy.arn
+}
