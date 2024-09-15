@@ -26,6 +26,7 @@ ${startup_script}
 EOF
 
 sed -i "s|OPTION_DESCRIPTION|${option_description}|g" /home/ec2-user/aws_vpce_policy_tester.py
+sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_commands.json
 
 sudo chmod +x /usr/local/bin/test_ec2_startup.sh
@@ -65,7 +66,7 @@ echo '[
   }
 ]' > /home/ec2-user/log-events.json
 
-# Create the log-events.json file for the CloudWatch put-log-events command
+# Create the targets.json file for the ssm send-command
 echo '[
   {
     "Key": "InstanceIds",
