@@ -29,11 +29,14 @@ steps:
   volumes:
     - name: terraform
       path: /workspace/terraform
+  environment:
+    GIT_REPO_URL:
+      from_secret: GIT_REPO_URL
   commands:
     - if [ -d /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/.git ]; then
         cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/ && git fetch && git reset --hard origin/main;
       else
-        git clone https://git.drewpy.pro/johnpshids/aws-vpce-policy-tester.git /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/;
+        git clone $GIT_REPO_URL /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/;
       fi
 
 - name: terraform-plan
@@ -114,6 +117,6 @@ steps:
 #     - terraform destroy -auto-approve
 
 
-# trigger:
-#   branch:
-#     - main
+trigger:
+  branch:
+    - main
