@@ -83,7 +83,6 @@
       "aws ssm list-commands",
       "aws ssm describe-instance-information",
       "aws ssm create-document --name bogus-document --content log-events.json",
-      "sleep 15 && echo sleep",
       "aws ssm get-parameter --name bogus-parameter",
       "aws ssm send-command --document-name bogus-document --targets file://targets.json",
       "aws ssm delete-document --name bogus-document"
