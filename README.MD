@@ -133,6 +133,7 @@ variables.tf
 
 ## Usage
 
+ - Give IAM policy creation about 10-15 minutes afterwards to settle before testing to ensure accuracy. 
  - After resources are created, ssh into your instace via the provided output for the elastic IP. 
  - Make sure to SSH using your public key you created earlier. 
  - Once you are logged in, you can run the VPC Endpoint Policy Tester using:

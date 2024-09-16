@@ -39,6 +39,8 @@ def run_aws_command(command):
             verdict = "Denied by VPC Endpoint Policy"
         elif "sleep" in sanitized_output:
             verdict = "Sleep Command"
+        elif "wait" in sanitized_output:
+            verdict = "Wait Command"
         else:
             verdict = "Allowed by VPC Endpoint Policy"
         return sanitized_output, verdict
