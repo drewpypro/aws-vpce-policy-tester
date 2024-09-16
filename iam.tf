@@ -26,7 +26,8 @@ resource "aws_iam_policy" "test_ec2_policy" {
           "ssm:*",
           "ssmmessages:*",
           "sts:*",
-          "iam:CreateServiceLinkedRole"
+          "iam:CreateServiceLinkedRole",
+          "cloudwatch:*"
         ]
         Resource = "*"
       }
