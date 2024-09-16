@@ -66,13 +66,14 @@ aws-vpce-policy-tester/
     - Some services and specific actions have higher elevated risk of exfil/infil.
 
 ## Considerations
-- This is as far as I am in my learning journey, hopefully this helps yours and I appreciate any feedback.
-- This repo doesn't discuss all security concepts or provide an end-to-end solution.
-- AWS IAM policy has character count limitations and may not scale well for large vpcs.
-- More tests are needed, such as working scenarios of cross-account access and commands that succeed fully.
-- Take these results with a grain of salt and do your own thorough testing with your own test cases.
-- Im still working on getting some commands to work in the #to-do section.
 - **DO NOT RUN THIS IN A PRODUCTION ENVIRONMENT**
+- Take these results with a grain of salt and do your own thorough testing with your own test cases.
+- More tests are needed, such as working scenarios of cross-account access and commands that succeed fully.
+- AWS IAM policy has character count limitations and may not scale well for large vpcs.
+- I use a drone pipeline to orchestrate terraform builds (.drone.yml)
+- Im still working on getting some commands to work in the #to-do section.
+- This repo doesn't discuss all security concepts or provide an end-to-end solution.
+- This is as far as I am in my learning journey, hopefully this helps yours and I appreciate any feedback.
 
 ## Prerequisites
 
@@ -165,7 +166,6 @@ python aws_vpce_policy_tester.py --help
  - fix resource create/delete
  - auto-run after 15 minutes of startup
  - investigate weird tpl interpolation of policy. 
- - ReadMe
  - create s3 private endpoint testing
  - generate report output in s3
  - create resources to complete commands
