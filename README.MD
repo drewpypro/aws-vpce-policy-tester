@@ -66,7 +66,7 @@ aws-vpce-policy-tester/
     - Some services and specific actions have higher elevated risk of exfil/infil.
 
 ## Considerations
-- This is as far as I am in my learning journey, please be gentle.
+- This is as far as I am in my learning journey, hopefully this helps yours and I appreciate any feedback.
 - This repo doesn't discuss all security concepts or provide an end-to-end solution.
 - AWS IAM policy has character count limitations and may not scale well for large vpcs.
 - More tests are needed, such as working scenarios of cross-account access and commands that succeed fully.

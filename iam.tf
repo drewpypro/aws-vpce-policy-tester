@@ -94,7 +94,7 @@ resource "aws_iam_role_policy_attachment" "test_assume_policy_attachment" {
 ## FLOW LOGS IAM
 
 resource "aws_iam_role" "producer_flow_logs_role" {
-  name     = "flow-logs-role"
+  name = "flow-logs-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -111,7 +111,7 @@ resource "aws_iam_role" "producer_flow_logs_role" {
 }
 
 resource "aws_iam_policy" "producer_flow_logs_policy" {
-  name     = "flow-logs-policy"
+  name = "flow-logs-policy"
 
   policy = jsonencode({
     Version = "2012-10-17",

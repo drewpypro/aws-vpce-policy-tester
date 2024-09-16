@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "cloudwatch:*",
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:PrincipalAccount": "${account_id}"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "${service_name}:*",
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:PrincipalAccount": "${account_id}"
+          }
+        }
+      }
+    ]
+  }

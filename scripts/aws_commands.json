@@ -39,7 +39,7 @@
     ],
     "logs": [
       "aws logs create-log-group --log-group-name bogus-log-group",
-      "sleep 30 && echo sleep",
+      "sleep 15 && echo sleep",
       "aws logs describe-log-groups",
       "aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events file://log-events.json",
       "aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream",
