@@ -7,17 +7,10 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Vulnerability Patterns (WIP)](#vulnerability-patterns-wip)
-  - [Prevent, React, Detect Patterns (WIP)](#prevent-react-detect-patterns-wip)
-  - [Videos](#videos)
-    - [Terraform Apply](#terraform-apply)
-    - [Jndi](#jndi)
-    - [Internet Access](#internet-access)
-    - [Struts](#struts)
-    - [Malicious Messages](#malicious-messages)
-    - [Insider Threats](#insider-threats)
-    - [Malicious File](#malicious-file)
-- [Conclusion](#conclusion)
+  - [TO DO](#to-do)
+  - [Contributing](#contributing)
+  - [Disclaimer](#disclaimer)
+  - [License](#license)
 
 ![AWS VPC Endpoint Policy Tester](img/aws-vpce-policy-tester-highlevel.png)
 
@@ -73,11 +66,12 @@ aws-vpce-policy-tester/
     - Some services and specific actions have higher elevated risk of exfil/infil.
 
 ## Considerations
-- This repo doesn't discuss all security concepts or provide an end-to-end solution. 
+- This is as far as I am in my learning journey, please be gentle.
+- This repo doesn't discuss all security concepts or provide an end-to-end solution.
 - AWS IAM policy has character count limitations and may not scale well for large vpcs.
 - More tests are needed, such as working scenarios of cross-account access and commands that succeed fully.
 - Take these results with a grain of salt and do your own thorough testing with your own test cases.
-
+- Im still working on getting some commands to work in the #to-do section.
 - **DO NOT RUN THIS IN A PRODUCTION ENVIRONMENT**
 
 ## Prerequisites
@@ -166,7 +160,7 @@ python aws_vpce_policy_tester.py --help
     python aws-vpce-policy-tester.py --shell
 ```
 
-# TO DO:
+## TO DO:
  - fix resource create/delete
  - auto-run after 15 minutes of startup
  - investigate weird tpl interpolation of policy. 
@@ -175,7 +169,7 @@ python aws_vpce_policy_tester.py --help
  - generate report output in s3
  - create resources to complete commands
 
-## Issues with these commands working in deny tests
+### Issues with these commands working in deny tests
     ```
     monitoring
         "aws cloudwatch list-tags-for-resource --resource-arn bogus-resource-arn", // Requires building cloudwatch resources?
@@ -188,9 +182,11 @@ python aws_vpce_policy_tester.py --help
         // "aws s3 rb s3://bogus-bucket", remove_bucket failed: s3://test An error occurred (AccessDenied) when calling the DeleteBucket operation: Access Denied
         // "aws s3api get-object --bucket bogus-bucket --key bogus-key /tmp/bogus-file",
         // "aws s3api put-object --bucket bogus-bucket --key bogus-key --body /tmp/bogus-file"
+    sts
+        // "aws sts assume-role --role-arn arn:aws:iam::VAR_ACCOUNT_ID:role/test_assume_role --role-session-name test-session" 
     ```
 
-## These commands are working, but the delete commands aren't. 
+### These commands are working, but the delete commands aren't. 
     ```
     "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name invalid-config --min-size 1 --max-size 1"
     "aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name --invalid-config foo ",

@@ -1,0 +1,373 @@
+
+Testing VPC Endpoint Policy configured with DenyAll for service: autoscaling
+Command: aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-asg --min-size 1 --max-size 1
+Result: 
+An error occurred (AccessDenied) when calling the CreateAutoScalingGroup operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: autoscaling:CreateAutoScalingGroup on resource: arn:aws:autoscaling:us-east-1:[ACCOUNT_ID]:autoScalingGroup:*:autoScalingGroupName/bogus-asg with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: sleep 30 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws autoscaling describe-auto-scaling-groups
+Result: 
+An error occurred (AccessDenied) when calling the DescribeAutoScalingGroups operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: autoscaling:DescribeAutoScalingGroups with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg
+Result: 
+An error occurred (AccessDenied) when calling the DeleteAutoScalingGroup operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: autoscaling:DeleteAutoScalingGroup on resource: arn:aws:autoscaling:us-east-1:[ACCOUNT_ID]:autoScalingGroup:*:autoScalingGroupName/bogus-asg with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: dms
+Command: aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234
+Result: 
+An error occurred (AccessDeniedException) when calling the CreateEndpoint operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dms:CreateEndpoint on resource: arn:aws:dms:us-east-1:[ACCOUNT_ID]:endpoint:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: sleep 30 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws dms describe-endpoints
+Result: 
+An error occurred (AccessDeniedException) when calling the DescribeEndpoints operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dms:DescribeEndpoints on resource: arn:aws:dms:us-east-1:[ACCOUNT_ID]:*:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dms list-tags-for-resource
+Result: 
+An error occurred (AccessDeniedException) when calling the ListTagsForResource operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dms:ListTagsForResource on resource: arn:aws:dms:us-east-1:[ACCOUNT_ID]:*:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn
+Result: 
+An error occurred (AccessDeniedException) when calling the DeleteEndpoint operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dms:DeleteEndpoint on resource: arn:aws:dms:us-east-1:[ACCOUNT_ID]:endpoint:bogus-endpoint-arn with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: dynamodb
+Command: aws dynamodb create-table --table-name bogus-table --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+Result: 
+An error occurred (AccessDeniedException) when calling the CreateTable operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:CreateTable on resource: arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb wait table-exists --table-name bogus-table
+Result: 
+Waiter TableExists failed: An error occurred (AccessDeniedException): User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:DescribeTable on resource: arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb list-tables
+Result: 
+An error occurred (AccessDeniedException) when calling the ListTables operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:ListTables on resource: arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb describe-endpoints
+Result: 
+An error occurred (AccessDeniedException) when calling the DescribeEndpoints operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:DescribeEndpoints on resource: * with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb put-item --table-name bogus-table --item file://item.json
+Result: 
+An error occurred (AccessDeniedException) when calling the PutItem operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:PutItem on resource: arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb get-item --table-name bogus-table --key file://key.json
+Result: 
+An error occurred (AccessDeniedException) when calling the GetItem operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:GetItem on resource: arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb delete-table --table-name bogus-table
+Result: 
+An error occurred (AccessDeniedException) when calling the DeleteTable operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: dynamodb:DeleteTable on resource: arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: ec2
+Command: aws ec2 list-snapshots-in-recycle-bin
+Result: 
+An error occurred (UnauthorizedOperation) when calling the ListSnapshotsInRecycleBin operation: You are not authorized to perform this operation. User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ec2:ListSnapshotsInRecycleBin with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ec2 describe-security-group-rules
+Result: 
+An error occurred (UnauthorizedOperation) when calling the DescribeSecurityGroupRules operation: You are not authorized to perform this operation. User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ec2:DescribeSecurityGroupRules with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ec2 create-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0 --gateway-id bogus-gateway-id
+Result: 
+An error occurred (UnauthorizedOperation) when calling the CreateRoute operation: You are not authorized to perform this operation. User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ec2:CreateRoute on resource: arn:aws:ec2:us-east-1:[ACCOUNT_ID]:*/* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ec2 delete-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0
+Result: 
+An error occurred (UnauthorizedOperation) when calling the DeleteRoute operation: You are not authorized to perform this operation. User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ec2:DeleteRoute on resource: arn:aws:ec2:us-east-1:[ACCOUNT_ID]:route-table/* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ec2 copy-image --source-image-id ami-0427090fd1714168b --source-region us-east-1 --name bogus-image-copy
+Result: 
+An error occurred (UnauthorizedOperation) when calling the CopyImage operation: You are not authorized to perform this operation. User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ec2:CopyImage on resource: arn:aws:ec2:us-east-1::image/* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ec2 copy-snapshot --source-region us-east-1 --source-snapshot-id snap-066877671789bd71b
+Result: 
+An error occurred (UnauthorizedOperation) when calling the CopySnapshot operation: You are not authorized to perform this operation. User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ec2:CopySnapshot on resource: arn:aws:ec2:us-east-1::snapshot/* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: elasticloadbalancing
+Command: aws elbv2 create-load-balancer --name bogus-lb --subnets bogus-subnet-id
+Result: 
+An error occurred (AccessDenied) when calling the CreateLoadBalancer operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: elasticloadbalancing:CreateLoadBalancer on resource: arn:aws:elasticloadbalancing:us-east-1:[ACCOUNT_ID]:loadbalancer/app/bogus-lb/* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws elbv2 set-security-groups --load-balancer-arn bogus-lb-arn --security-groups bogus-sg-id
+Result: 
+An error occurred (AccessDenied) when calling the SetSecurityGroups operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: elasticloadbalancing:SetSecurityGroups on resource: bogus-lb-arn with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws elbv2 describe-load-balancers
+Result: 
+An error occurred (AccessDenied) when calling the DescribeLoadBalancers operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: elasticloadbalancing:DescribeLoadBalancers with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws elbv2 delete-load-balancer --load-balancer-arn bogus-lb-arn
+Result: 
+An error occurred (AccessDenied) when calling the DeleteLoadBalancer operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: elasticloadbalancing:DeleteLoadBalancer on resource: bogus-lb-arn with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: monitoring
+Command: aws cloudwatch put-metric-data --namespace bogus-namespace --metric-name bogus-metric --value 1.0
+Result: 
+An error occurred (AccessDenied) when calling the PutMetricData operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: cloudwatch:PutMetricData with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws cloudwatch describe-alarms
+Result: 
+An error occurred (AccessDenied) when calling the DescribeAlarms operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: cloudwatch:DescribeAlarms on resource: arn:aws:cloudwatch:us-east-1:[ACCOUNT_ID]:alarm:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: logs
+Command: aws logs create-log-group --log-group-name bogus-log-group
+Result: 
+An error occurred (AccessDeniedException) when calling the CreateLogGroup operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: logs:CreateLogGroup on resource: arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:bogus-log-group:log-stream: with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: sleep 30 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws logs describe-log-groups
+Result: 
+An error occurred (AccessDeniedException) when calling the DescribeLogGroups operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: logs:DescribeLogGroups on resource: arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group::log-stream: with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events file://log-events.json
+Result: 
+An error occurred (AccessDeniedException) when calling the PutLogEvents operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: logs:PutLogEvents on resource: arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:bogus-log-group:log-stream:bogus-stream with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream
+Result: 
+An error occurred (AccessDeniedException) when calling the GetLogEvents operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: logs:GetLogEvents on resource: arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:bogus-log-group:log-stream:bogus-stream with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws logs delete-log-group --log-group-name bogus-log-group
+Result: 
+An error occurred (AccessDeniedException) when calling the DeleteLogGroup operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: logs:DeleteLogGroup on resource: arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:bogus-log-group:log-stream: with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: rds
+Command: aws rds create-db-instance --db-instance-identifier bogus-instance --db-instance-class db.t2.micro --engine mysql --master-username bogus-user --master-user-password bogus-pass --allocated-storage 20
+Result: 
+An error occurred (AccessDenied) when calling the CreateDBInstance operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: rds:CreateDBInstance on resource: arn:aws:rds:us-east-1:[ACCOUNT_ID]:db:bogus-instance with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws rds wait db-instance-available --db-instance-identifier bogus-instance
+Result: 
+Waiter DBInstanceAvailable failed: An error occurred (AccessDenied): User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: rds:DescribeDBInstances on resource: arn:aws:rds:us-east-1:[ACCOUNT_ID]:db:bogus-instance with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws rds describe-db-security-groups
+Result: 
+An error occurred (AccessDenied) when calling the DescribeDBSecurityGroups operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: rds:DescribeDBSecurityGroups on resource: arn:aws:rds:us-east-1:[ACCOUNT_ID]:secgrp:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws rds delete-db-instance --db-instance-identifier bogus-instance
+Result: 
+An error occurred (AccessDenied) when calling the DeleteDBInstance operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: rds:DeleteDBInstance on resource: arn:aws:rds:us-east-1:[ACCOUNT_ID]:db:bogus-instance with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws rds copy-db-snapshot --source-db-snapshot-identifier snap-066877671789bd71b --target-db-snapshot-identifier snap-066877671789bd71b
+Result: 
+An error occurred (AccessDenied) when calling the CopyDBSnapshot operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: rds:CopyDBSnapshot on resource: arn:aws:rds:us-east-1:[ACCOUNT_ID]:snapshot:snap-066877671789bd71b with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws rds modify-db-cluster-snapshot-attribute --db-cluster-snapshot-identifier snap-066877671789bd71b --attribute-name restore --values-to-add bogus
+Result: 
+An error occurred (AccessDenied) when calling the ModifyDBClusterSnapshotAttribute operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: rds:ModifyDBClusterSnapshotAttribute on resource: arn:aws:rds:us-east-1:[ACCOUNT_ID]:cluster-snapshot:snap-066877671789bd71b with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: s3
+Command: aws s3 ls
+Result: 
+An error occurred (AccessDenied) when calling the ListBuckets operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: s3:ListAllMyBuckets with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws s3 mb s3://bogus-bucket
+Result: make_bucket failed: s3://bogus-bucket An error occurred (AccessDenied) when calling the CreateBucket operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: s3:CreateBucket on resource: "arn:aws:s3:::bogus-bucket" with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: secretsmanager
+Command: aws secretsmanager create-secret --name bogus-secret --secret-string bogus-string --kms-key-id 1234
+Result: 
+An error occurred (AccessDeniedException) when calling the CreateSecret operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: secretsmanager:CreateSecret on resource: bogus-secret with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager list-secrets
+Result: 
+An error occurred (AccessDeniedException) when calling the ListSecrets operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: secretsmanager:ListSecrets with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager describe-secret --secret-id bogus-secret
+Result: 
+An error occurred (AccessDeniedException) when calling the DescribeSecret operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: secretsmanager:DescribeSecret on resource: bogus-secret with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager get-random-password
+Result: 
+An error occurred (AccessDeniedException) when calling the GetRandomPassword operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: secretsmanager:GetRandomPassword with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager get-secret-value --secret-id bogus-secret-id
+Result: 
+An error occurred (AccessDeniedException) when calling the GetSecretValue operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: secretsmanager:GetSecretValue on resource: bogus-secret-id with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager delete-secret --secret-id 1234
+Result: 
+An error occurred (AccessDeniedException) when calling the DeleteSecret operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: secretsmanager:DeleteSecret on resource: 1234 with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: sns
+Command: aws sns create-topic --name bogus-topic
+Result: 
+An error occurred (AuthorizationError) when calling the CreateTopic operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: SNS:CreateTopic on resource: arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: sleep 30 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws sns list-topics
+Result: 
+An error occurred (AuthorizationError) when calling the ListTopics operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: SNS:ListTopics on resource: arn:aws:sns:us-east-1:[ACCOUNT_ID]:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws sns publish --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic --message 'Bogus message'
+Result: 
+An error occurred (AuthorizationError) when calling the Publish operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: SNS:Publish on resource: arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic
+Result: 
+An error occurred (AuthorizationError) when calling the DeleteTopic operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: SNS:DeleteTopic on resource: arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: sqs
+Command: aws sqs create-queue --queue-name bogus-queue
+Result: 
+An error occurred (AccessDenied) when calling the CreateQueue operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: sqs:createqueue on resource: arn:aws:sqs:us-east-1:[ACCOUNT_ID]:bogus-queue with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: sleep 30 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws sqs list-queues
+Result: 
+An error occurred (AccessDenied) when calling the ListQueues operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: sqs:listqueues on resource: arn:aws:sqs:us-east-1:[ACCOUNT_ID]: with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue --message-body 'Bogus message'
+Result: 
+An error occurred (AWS.SimpleQueueService.NonExistentQueue) when calling the SendMessage operation: The specified queue does not exist for this wsdl version.
+
+Verdict: Queue does not exist
+Command: aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue
+Result: 
+An error occurred (AWS.SimpleQueueService.NonExistentQueue) when calling the ReceiveMessage operation: The specified queue does not exist for this wsdl version.
+
+Verdict: Queue does not exist
+Command: aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue
+Result: 
+An error occurred (AWS.SimpleQueueService.NonExistentQueue) when calling the DeleteQueue operation: The specified queue does not exist for this wsdl version.
+
+Verdict: Queue does not exist
+
+Testing VPC Endpoint Policy configured with DenyAll for service: ssm
+Command: aws ssm list-commands
+Result: 
+An error occurred (AccessDeniedException) when calling the ListCommands operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:ListCommands on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ssm describe-instance-information
+Result: 
+An error occurred (AccessDeniedException) when calling the DescribeInstanceInformation operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:DescribeInstanceInformation on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:* with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ssm create-document --name bogus-document --content log-events.json
+Result: 
+An error occurred (AccessDeniedException) when calling the CreateDocument operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:CreateDocument on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:document/bogus-document with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: sleep 30 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws ssm get-parameter --name bogus-parameter
+Result: 
+An error occurred (AccessDeniedException) when calling the GetParameter operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:GetParameter on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:parameter/bogus-parameter with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ssm send-command --document-name bogus-document --targets file://targets.json
+Result: 
+An error occurred (AccessDeniedException) when calling the SendCommand operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:SendCommand on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:managed-instance/bogus-instance-id with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ssm delete-document --name bogus-document
+Result: 
+An error occurred (AccessDeniedException) when calling the DeleteDocument operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:DeleteDocument on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:document/bogus-document with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: ssmmessages
+Command: aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateControlChannel
+Result: 
+An error occurred (AccessDeniedException) when calling the StartSession operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:StartSession on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:managed-instance/bogus-instance-id with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel
+Result: 
+An error occurred (AccessDeniedException) when calling the StartSession operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: ssm:StartSession on resource: arn:aws:ssm:us-east-1:[ACCOUNT_ID]:managed-instance/bogus-instance-id with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with DenyAll for service: sts
+Command: aws sts get-session-token
+Result: 
+An error occurred (AccessDenied) when calling the GetSessionToken operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: sts:GetSessionToken on resource: Resource with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws sts get-caller-identity
+Result: 
+An error occurred (AccessDenied) when calling the GetCallerIdentity operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-01dc1b7dd19725bab is not authorized to perform: sts:GetCallerIdentity on resource: Resource with an explicit deny in a VPC endpoint policy
+
+Verdict: Denied by VPC Endpoint Policy

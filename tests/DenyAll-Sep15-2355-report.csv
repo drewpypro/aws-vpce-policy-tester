@@ -1,10 +1,10 @@
 Command,Verdict,Option Description
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-asg --min-size 1 --max-size 1,Denied by VPC Endpoint Policy,DenyAll
-sleep 30,Allowed by VPC Endpoint Policy,DenyAll
+sleep 30 && echo sleep,Sleep Command,DenyAll
 aws autoscaling describe-auto-scaling-groups,Denied by VPC Endpoint Policy,DenyAll
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg,Denied by VPC Endpoint Policy,DenyAll
 aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234,Denied by VPC Endpoint Policy,DenyAll
-sleep 30,Allowed by VPC Endpoint Policy,DenyAll
+sleep 30 && echo sleep,Sleep Command,DenyAll
 aws dms describe-endpoints,Denied by VPC Endpoint Policy,DenyAll
 aws dms list-tags-for-resource,Denied by VPC Endpoint Policy,DenyAll
 aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn,Denied by VPC Endpoint Policy,DenyAll
@@ -28,7 +28,7 @@ aws elbv2 delete-load-balancer --load-balancer-arn bogus-lb-arn,Denied by VPC En
 aws cloudwatch put-metric-data --namespace bogus-namespace --metric-name bogus-metric --value 1.0,Denied by VPC Endpoint Policy,DenyAll
 aws cloudwatch describe-alarms,Denied by VPC Endpoint Policy,DenyAll
 aws logs create-log-group --log-group-name bogus-log-group,Denied by VPC Endpoint Policy,DenyAll
-sleep 30,Allowed by VPC Endpoint Policy,DenyAll
+sleep 30 && echo sleep,Sleep Command,DenyAll
 aws logs describe-log-groups,Denied by VPC Endpoint Policy,DenyAll
 aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events file://log-events.json,Denied by VPC Endpoint Policy,DenyAll
 aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream,Denied by VPC Endpoint Policy,DenyAll
@@ -48,12 +48,12 @@ aws secretsmanager get-random-password,Denied by VPC Endpoint Policy,DenyAll
 aws secretsmanager get-secret-value --secret-id bogus-secret-id,Denied by VPC Endpoint Policy,DenyAll
 aws secretsmanager delete-secret --secret-id 1234,Denied by VPC Endpoint Policy,DenyAll
 aws sns create-topic --name bogus-topic,Denied by VPC Endpoint Policy,DenyAll
-sleep 30,Allowed by VPC Endpoint Policy,DenyAll
+sleep 30 && echo sleep,Sleep Command,DenyAll
 aws sns list-topics,Denied by VPC Endpoint Policy,DenyAll
 aws sns publish --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic --message 'Bogus message',Denied by VPC Endpoint Policy,DenyAll
 aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic,Denied by VPC Endpoint Policy,DenyAll
 aws sqs create-queue --queue-name bogus-queue,Denied by VPC Endpoint Policy,DenyAll
-sleep 30,Allowed by VPC Endpoint Policy,DenyAll
+sleep 30 && echo sleep,Sleep Command,DenyAll
 aws sqs list-queues,Denied by VPC Endpoint Policy,DenyAll
 aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue --message-body 'Bogus message',Queue does not exist,DenyAll
 aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue,Queue does not exist,DenyAll
@@ -61,7 +61,7 @@ aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID
 aws ssm list-commands,Denied by VPC Endpoint Policy,DenyAll
 aws ssm describe-instance-information,Denied by VPC Endpoint Policy,DenyAll
 aws ssm create-document --name bogus-document --content log-events.json,Denied by VPC Endpoint Policy,DenyAll
-sleep 30,Allowed by VPC Endpoint Policy,DenyAll
+sleep 30 && echo sleep,Sleep Command,DenyAll
 aws ssm get-parameter --name bogus-parameter,Denied by VPC Endpoint Policy,DenyAll
 aws ssm send-command --document-name bogus-document --targets file://targets.json,Denied by VPC Endpoint Policy,DenyAll
 aws ssm delete-document --name bogus-document,Denied by VPC Endpoint Policy,DenyAll
@@ -69,4 +69,3 @@ aws ssm start-session --target bogus-instance-id --document-name ssmmessages:Cre
 aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel,Denied by VPC Endpoint Policy,DenyAll
 aws sts get-session-token,Denied by VPC Endpoint Policy,DenyAll
 aws sts get-caller-identity,Denied by VPC Endpoint Policy,DenyAll
-aws sts assume-role --role-arn arn:aws:iam::[ACCOUNT_ID]:role/test_assume_role --role-session-name test-session,Allowed by VPC Endpoint Policy,DenyAll
