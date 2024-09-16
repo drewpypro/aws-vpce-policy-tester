@@ -1,0 +1,67 @@
+Command,Verdict,Option Description
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-asg --min-size 1 --max-size 1,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws autoscaling describe-auto-scaling-groups,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234 --kms-key-id 1234,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dms describe-endpoints,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dms list-tags-for-resource,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn,Allowed by VPC Endpoint Policy,PrincipalAccount
+"aws dynamodb create-table --table-name bogus-table --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5",Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dynamodb wait table-exists --table-name bogus-table && echo wait,Wait Command,PrincipalAccount
+aws dynamodb list-tables,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dynamodb describe-endpoints,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dynamodb put-item --table-name bogus-table --item file://item.json,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dynamodb get-item --table-name bogus-table --key file://key.json,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws dynamodb delete-table --table-name bogus-table,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ec2 list-snapshots-in-recycle-bin,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ec2 describe-security-group-rules,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ec2 create-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0 --gateway-id bogus-gateway-id,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ec2 delete-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ec2 copy-image --source-image-id ami-0427090fd1714168b --source-region us-east-1 --name bogus-image-copy,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ec2 copy-snapshot --source-region us-east-1 --source-snapshot-id snap-066877671789bd71b,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws elbv2 create-load-balancer --name bogus-lb --subnets bogus-subnet-id,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws elbv2 set-security-groups --load-balancer-arn bogus-lb-arn --security-groups bogus-sg-id,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws elbv2 describe-load-balancers,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws elbv2 delete-load-balancer --load-balancer-arn bogus-lb-arn,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws cloudwatch put-metric-data --namespace bogus-namespace --metric-name bogus-metric --value 1.0,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws cloudwatch describe-alarms,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws logs create-log-group --log-group-name bogus-log-group,Allowed by VPC Endpoint Policy,PrincipalAccount
+sleep 15 && echo sleep,Sleep Command,PrincipalAccount
+aws logs describe-log-groups,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events file://log-events.json,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws logs delete-log-group --log-group-name bogus-log-group,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws rds create-db-instance --db-instance-identifier bogus-instance --db-instance-class db.t2.micro --engine mysql --master-username bogus-user --master-user-password bogus-pass --allocated-storage 20,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws rds describe-db-security-groups,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws rds delete-db-instance --db-instance-identifier bogus-instance,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws rds copy-db-snapshot --source-db-snapshot-identifier snap-066877671789bd71b --target-db-snapshot-identifier snap-066877671789bd71b,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws rds modify-db-cluster-snapshot-attribute --db-cluster-snapshot-identifier snap-066877671789bd71b --attribute-name restore --values-to-add bogus,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws s3 ls,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws s3 mb s3://bogus-bucket-test3 --endpoint-url https://mcdonalds.com,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws secretsmanager create-secret --name bogus-secret-key --secret-string bogus-string --kms-key-id 1234,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws secretsmanager list-secrets,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws secretsmanager describe-secret --secret-id bogus-secret,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws secretsmanager get-random-password,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws secretsmanager get-secret-value --secret-id bogus-secret-id,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws secretsmanager delete-secret --secret-id 1234,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sns create-topic --name bogus-topic,Allowed by VPC Endpoint Policy,PrincipalAccount
+sleep 15 && echo sleep,Sleep Command,PrincipalAccount
+aws sns list-topics,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sns publish --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic --message 'Bogus message',Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sqs create-queue --queue-name bogus-queue,Allowed by VPC Endpoint Policy,PrincipalAccount
+sleep 15 && echo sleep,Sleep Command,PrincipalAccount
+aws sqs list-queues,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue --message-body 'Bogus message',Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm list-commands,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm describe-instance-information,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm create-document --name bogus-document --content log-events.json,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm get-parameter --name bogus-parameter,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm send-command --document-name bogus-document --targets file://targets.json,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm delete-document --name bogus-document,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateControlChannel,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sts get-session-token,Allowed by VPC Endpoint Policy,PrincipalAccount
+aws sts get-caller-identity,Allowed by VPC Endpoint Policy,PrincipalAccount

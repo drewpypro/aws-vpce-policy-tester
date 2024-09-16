@@ -1,7 +1,7 @@
 variable "option" {
   type        = number
   description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (ResourceRestriction), 4 (OU-Path) or 5 (Deny All)"
-  default     = 2
+  default     = 3
 }
 
 locals {
@@ -17,9 +17,9 @@ locals {
 # Define a list of services that need VPC endpoints
 variable "services" {
   default = ["autoscaling", "dms", "ec2", "ec2messages",
-    "elasticloadbalancing", "logs", "monitoring", "rds",
-    "secretsmanager", "sns", "sqs", "ssm",
-  "ssmmessages", "sts"]
+             "elasticloadbalancing", "logs", "monitoring", "rds",
+             "secretsmanager", "sns", "sqs", "ssm",
+             "ssmmessages", "sts"]
 }
 
 
