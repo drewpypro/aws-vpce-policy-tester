@@ -87,7 +87,7 @@ aws-vpce-policy-tester/
 
 1. Clone the repository:
    ```powershell
-   git clone https://github.com/drewpnutz/aws-vpc-endpoint-policy-tester.git
+   git clone https://github.com/drewpypro/aws-vpc-endpoint-policy-tester.git
    cd aws-vpc-endpoint-policy-tester
    ```
 
