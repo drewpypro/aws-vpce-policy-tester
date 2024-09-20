@@ -90,7 +90,6 @@ steps:
 #     - cd /workspace/terraform/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/
 #     - terraform apply -auto-approve
 
-Run terraform destroy if the action parameter is 'destroy'
 - name: terraform-destroy
   image: hashicorp/terraform:latest
   network_mode: br1.201
