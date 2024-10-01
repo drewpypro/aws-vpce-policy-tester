@@ -14,17 +14,13 @@
       ]
     },
     {
-      "Sid": "DenyInteractionWithResourcesNotInSpecificAccount",
+      "Effect": "Allow",
+      "Principal": "*",
       "Action": "${service_name}:*",
-      "Effect": "Deny",
-      "Resource": [
-        "arn:aws:${service_name}:${region}:${account_id}:*"
-      ],
+      "Resource": "*",
       "Condition": {
-        "StringNotEquals": {
-          "aws:ResourceAccount": [
-            "${account_id}"
-          ]
+        "StringEquals": {
+          "aws:ResourceAccount": "${var.account_id}"
         }
       }
     }

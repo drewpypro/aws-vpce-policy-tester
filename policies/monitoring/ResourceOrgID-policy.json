@@ -8,13 +8,13 @@
       "Resource": "arn:aws:cloudwatch:${region}:${account_id}:*"
     },
     {
-      "Sid": "DenyPutObjectToS3ResourcesOutsideMyOrganization",
-      "Effect": "Deny",
+      "Effect": "Allow",
+      "Principal": "*",
       "Action": "${service_name}:*",
-      "Resource": "arn:aws:${service_name}:${region}:${account_id}:*",
+      "Resource": "*",
       "Condition": {
-        "StringNotEquals": {
-          "aws:ResourceOrgID": "${org_id}"
+        "StringEquals": {
+          "aws:ResourceOrgID": "${aws:PrincipalOrgID}"
         }
       }
     }
