@@ -20,7 +20,7 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "aws:ResourceAccount": "${var.account_id}"
+          "aws:ResourceAccount": "${account_id}"
         }
       }
     }
