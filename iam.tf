@@ -47,13 +47,6 @@ resource "aws_iam_role" "test_ec2_role" {
         Principal = {
           Service = "ec2.amazonaws.com"
         }
-      },
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          AWS = "arn:aws:iam::${var.account_id}:role/test_assume_role"
-        }
       }
     ]
   })
@@ -76,11 +69,11 @@ resource "aws_iam_role" "test_assume_role" {
     Version = "2012-10-17"
     Statement = [
       {
+        Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          AWS = "arn:aws:iam::${var.account_id}:role/Test_ec2_Role"
+          Service = "ec2.amazonaws.com"
         }
-        Action = "sts:AssumeRole"
       }
     ]
   })
