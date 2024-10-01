@@ -14,17 +14,13 @@
       ]
     },
     {
-      "Sid": "DenyInteractionWithResourcesNotInSpecificAccount",
-      "Action": "${service_name}:*",
+      "Sid": "DenyPutObjectToS3ResourcesOutsideMyOrganization",
       "Effect": "Deny",
-      "Resource": [
-        "arn:aws:${service_name}:${region}:${account_id}:*"
-      ],
+      "Action": "${service_name}:*",
+      "Resource": "arn:aws:${service_name}:${region}:${account_id}:*",
       "Condition": {
         "StringNotEquals": {
-          "aws:ResourceOrgID": [
-            "${org_id}"
-          ]
+          "aws:ResourceOrgID": "${org_id}"
         }
       }
     }

@@ -1,20 +1,14 @@
 {
   "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "DenyInteractionWithResourcesNotInSpecificAccount",
-      "Action": "${service_name}:*",
-      "Effect": "Deny",
-      "Resource": [
-        "arn:aws:${service_name}:${region}:${account_id}:*"
-      ],
-      "Condition": {
-        "StringNotEquals": {
-          "aws:ResourceOrgID": [
-            "${org_id}"
-          ]
-        }
+  "Statement": {
+    "Sid": "DenyPutObjectToS3ResourcesOutsideMyOrganization",
+    "Effect": "Deny",
+    "Action": "${service_name}:*",
+    "Resource": "arn:aws:${service_name}:${region}:${account_id}:*",
+    "Condition": {
+      "StringNotEquals": {
+        "aws:ResourceOrgID": "${org_id}"
       }
     }
-  ]
+  }
 }
