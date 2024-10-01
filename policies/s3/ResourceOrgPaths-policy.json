@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "Resource": [
+          "arn:aws:s3:::al2023-repos-us-east-1-de612dc2/*",
+          "arn:aws:s3:::al2023-repos-us-east-1-de612dc2"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "${service_name}:*",
+        "Resource": "*",
+        "Condition": {
+          "ForAnyValue:StringLike": {
+            "aws:ResourceOrgPaths": ["${org_path}*"]
+          }
+        }
+      }
+    ]
+  }

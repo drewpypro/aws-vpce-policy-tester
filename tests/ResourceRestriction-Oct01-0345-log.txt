@@ -1,0 +1,528 @@
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: autoscaling
+Command: aws autoscaling create-auto-scaling-group --auto-scaling-group-name bogus-asg --launch-configuration-name bogus-asg --min-size 1 --max-size 1
+Result: 
+An error occurred (ValidationError) when calling the CreateAutoScalingGroup operation: Launch configuration name not found - A launch configuration with the name: bogus-asg does not exist
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws autoscaling describe-auto-scaling-groups
+Result: 
+An error occurred (AccessDenied) when calling the DescribeAutoScalingGroups operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: autoscaling:DescribeAutoScalingGroups because no VPC endpoint policy allows the autoscaling:DescribeAutoScalingGroups action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws autoscaling delete-auto-scaling-group --auto-scaling-group-name bogus-asg
+Result: 
+An error occurred (ValidationError) when calling the DeleteAutoScalingGroup operation: AutoScalingGroup name not found - AutoScalingGroup 'bogus-asg' not found
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: dms
+Command: aws dms create-endpoint --endpoint-identifier bogus-endpoint --endpoint-type source --engine-name mysql --username bogus-user --password bogus-pass --server-name bogus-db --port 1234 --kms-key-id 1234
+Result: 
+An error occurred (KMSKeyNotAccessibleFault) when calling the CreateEndpoint operation: The provided KMS key does not exist.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dms describe-endpoints
+Result: {
+    "Endpoints": []
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dms list-tags-for-resource
+Result: 
+An error occurred (InvalidParameterCombinationException) when calling the ListTagsForResource operation: Either ResourceArn or ResourceArnList must be present.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dms delete-endpoint --endpoint-arn bogus-endpoint-arn
+Result: 
+An error occurred (InvalidParameterValueException) when calling the DeleteEndpoint operation: Invalid value bogus-endpoint-arn for EndpointArn
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: dynamodb
+Command: aws dynamodb create-table --table-name bogus-table --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+Result: {
+    "TableDescription": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "id",
+                "AttributeType": "S"
+            }
+        ],
+        "TableName": "bogus-table",
+        "KeySchema": [
+            {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+            }
+        ],
+        "TableStatus": "CREATING",
+        "CreationDateTime": "2024-10-01T03:45:32.083000+00:00",
+        "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 5,
+            "WriteCapacityUnits": 5
+        },
+        "TableSizeBytes": 0,
+        "ItemCount": 0,
+        "TableArn": "arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table",
+        "TableId": "384531f8-de58-4494-974c-73590d846823",
+        "DeletionProtectionEnabled": false
+    }
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dynamodb wait table-exists --table-name bogus-table && echo wait
+Result: wait
+
+Verdict: Wait Command
+Command: aws dynamodb list-tables
+Result: {
+    "TableNames": [
+        "bogus-table"
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dynamodb describe-endpoints
+Result: 
+An error occurred (AccessDeniedException) when calling the DescribeEndpoints operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: dynamodb:DescribeEndpoints on resource: * because no VPC endpoint policy allows the dynamodb:DescribeEndpoints action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws dynamodb put-item --table-name bogus-table --item file://item.json
+Result: 
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dynamodb get-item --table-name bogus-table --key file://key.json
+Result: {
+    "Item": {
+        "id": {
+            "S": "bogus"
+        }
+    }
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws dynamodb delete-table --table-name bogus-table
+Result: {
+    "TableDescription": {
+        "TableName": "bogus-table",
+        "TableStatus": "DELETING",
+        "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 5,
+            "WriteCapacityUnits": 5
+        },
+        "TableSizeBytes": 0,
+        "ItemCount": 0,
+        "TableArn": "arn:aws:dynamodb:us-east-1:[ACCOUNT_ID]:table/bogus-table",
+        "TableId": "384531f8-de58-4494-974c-73590d846823",
+        "DeletionProtectionEnabled": false
+    }
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: ec2
+Command: aws ec2 list-snapshots-in-recycle-bin
+Result: {
+    "Snapshots": []
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ec2 describe-security-group-rules
+Result: {
+    "SecurityGroupRules": [
+        {
+            "SecurityGroupRuleId": "sgr-0dafc5eb7f2e429ef",
+            "GroupId": "sg-087518813ef1372aa",
+            "GroupOwnerId": "[ACCOUNT_ID]",
+            "IsEgress": true,
+            "IpProtocol": "-1",
+            "FromPort": -1,
+            "ToPort": -1,
+            "CidrIpv4": "0.0.0.0/0",
+            "Tags": []
+        },
+        {
+            "SecurityGroupRuleId": "sgr-004f7ca1572ac9521",
+            "GroupId": "sg-087518813ef1372aa",
+            "GroupOwnerId": "[ACCOUNT_ID]",
+            "IsEgress": false,
+            "IpProtocol": "tcp",
+            "FromPort": 22,
+            "ToPort": 22,
+            "CidrIpv4": "[PUBLIC_SSH_IP]",
+            "Tags": []
+        },
+        {
+            "SecurityGroupRuleId": "sgr-05d6691f7247cb354",
+            "GroupId": "sg-0f590b5ffbfb8d2d3",
+            "GroupOwnerId": "[ACCOUNT_ID]",
+            "IsEgress": true,
+            "IpProtocol": "-1",
+            "FromPort": -1,
+            "ToPort": -1,
+            "CidrIpv4": "0.0.0.0/0",
+            "Tags": []
+        },
+        {
+            "SecurityGroupRuleId": "sgr-0ce748ec6766a1607",
+            "GroupId": "sg-0f590b5ffbfb8d2d3",
+            "GroupOwnerId": "[ACCOUNT_ID]",
+            "IsEgress": false,
+            "IpProtocol": "-1",
+            "FromPort": -1,
+            "ToPort": -1,
+            "ReferencedGroupInfo": {
+                "GroupId": "sg-0f590b5ffbfb8d2d3",
+                "UserId": "[ACCOUNT_ID]"
+            },
+            "Tags": []
+        },
+        {
+            "SecurityGroupRuleId": "sgr-0e95cd89e33b8fc89",
+            "GroupId": "sg-02839581824fffdb7",
+            "GroupOwnerId": "[ACCOUNT_ID]",
+            "IsEgress": false,
+            "IpProtocol": "-1",
+            "FromPort": -1,
+            "ToPort": -1,
+            "CidrIpv4": "192.168.0.0/16",
+            "Tags": []
+        }
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ec2 create-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0 --gateway-id bogus-gateway-id
+Result: 
+An error occurred (InvalidRouteTableId.Malformed) when calling the CreateRoute operation: Invalid id: "bogus-table-id" (expecting "rtb-...")
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ec2 delete-route --route-table-id bogus-table-id --destination-cidr-block 0.0.0.0/0
+Result: 
+An error occurred (InvalidRouteTableId.Malformed) when calling the DeleteRoute operation: Invalid id: "bogus-table-id" (expecting "rtb-...")
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ec2 copy-image --source-image-id ami-0427090fd1714168b --source-region us-east-1 --name bogus-image-copy
+Result: {
+    "ImageId": "ami-0e930c21007777ba6"
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ec2 copy-snapshot --source-region us-east-1 --source-snapshot-id snap-066877671789bd71b
+Result: {
+    "SnapshotId": "snap-04dc7a0337c9e120a"
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: elasticloadbalancing
+Command: aws elbv2 create-load-balancer --name bogus-lb --subnets bogus-subnet-id
+Result: 
+An error occurred (InvalidSubnet) when calling the CreateLoadBalancer operation: The subnet ID 'bogus-subnet-id' is not valid
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws elbv2 set-security-groups --load-balancer-arn bogus-lb-arn --security-groups bogus-sg-id
+Result: 
+An error occurred (AccessDenied) when calling the SetSecurityGroups operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: elasticloadbalancing:SetSecurityGroups on resource: bogus-lb-arn because no VPC endpoint policy allows the elasticloadbalancing:SetSecurityGroups action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws elbv2 describe-load-balancers
+Result: 
+An error occurred (AccessDenied) when calling the DescribeLoadBalancers operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: elasticloadbalancing:DescribeLoadBalancers because no VPC endpoint policy allows the elasticloadbalancing:DescribeLoadBalancers action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws elbv2 delete-load-balancer --load-balancer-arn bogus-lb-arn
+Result: 
+An error occurred (ValidationError) when calling the DeleteLoadBalancer operation: 'bogus-lb-arn' must be in ARN format
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: monitoring
+Command: aws cloudwatch put-metric-data --namespace bogus-namespace --metric-name bogus-metric --value 1.0
+Result: 
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws cloudwatch describe-alarms
+Result: {
+    "MetricAlarms": [],
+    "CompositeAlarms": []
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: logs
+Command: aws logs create-log-group --log-group-name bogus-log-group
+Result: 
+Verdict: Allowed by VPC Endpoint Policy
+Command: sleep 15 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws logs describe-log-groups
+Result: {
+    "logGroups": [
+        {
+            "logGroupName": "/aws/guardduty/malware-scan-events",
+            "creationTime": 1723409220248,
+            "retentionInDays": 90,
+            "metricFilterCount": 0,
+            "arn": "arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:/aws/guardduty/malware-scan-events:*",
+            "storedBytes": 3582,
+            "logGroupClass": "STANDARD",
+            "logGroupArn": "arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:/aws/guardduty/malware-scan-events"
+        },
+        {
+            "logGroupName": "bogus-log-group",
+            "creationTime": 1727754365548,
+            "metricFilterCount": 0,
+            "arn": "arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:bogus-log-group:*",
+            "storedBytes": 0,
+            "logGroupClass": "STANDARD",
+            "logGroupArn": "arn:aws:logs:us-east-1:[ACCOUNT_ID]:log-group:bogus-log-group"
+        }
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws logs put-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream --log-events file://log-events.json
+Result: 
+An error occurred (ResourceNotFoundException) when calling the PutLogEvents operation: The specified log stream does not exist.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws logs get-log-events --log-group-name bogus-log-group --log-stream-name bogus-stream
+Result: 
+An error occurred (ResourceNotFoundException) when calling the GetLogEvents operation: The specified log stream does not exist.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws logs delete-log-group --log-group-name bogus-log-group
+Result: 
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: rds
+Command: aws rds create-db-instance --db-instance-identifier bogus-instance --db-instance-class db.t2.micro --engine mysql --master-username bogus-user --master-user-password bogus-pass --allocated-storage 20
+Result: 
+An error occurred (InvalidSubnet) when calling the CreateDBInstance operation: No default subnet detected in VPC. Please contact AWS Support to recreate default Subnets.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws rds describe-db-security-groups
+Result: {
+    "DBSecurityGroups": [
+        {
+            "OwnerId": "[ACCOUNT_ID]",
+            "DBSecurityGroupName": "default",
+            "DBSecurityGroupDescription": "default",
+            "EC2SecurityGroups": [],
+            "IPRanges": [],
+            "DBSecurityGroupArn": "arn:aws:rds:us-east-1:[ACCOUNT_ID]:secgrp:default"
+        }
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws rds delete-db-instance --db-instance-identifier bogus-instance
+Result: 
+An error occurred (DBInstanceNotFound) when calling the DeleteDBInstance operation: DBInstance bogus-instance not found.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws rds copy-db-snapshot --source-db-snapshot-identifier snap-066877671789bd71b --target-db-snapshot-identifier snap-066877671789bd71b
+Result: 
+An error occurred (DBSnapshotNotFound) when calling the CopyDBSnapshot operation: Requested snapshot snap-066877671789bd71b not found in source region us-east-1
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws rds modify-db-cluster-snapshot-attribute --db-cluster-snapshot-identifier snap-066877671789bd71b --attribute-name restore --values-to-add bogus
+Result: 
+An error occurred (DBClusterSnapshotNotFoundFault) when calling the ModifyDBClusterSnapshotAttribute operation: DBClusterSnapshot not found: snap-066877671789bd71b
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: s3
+Command: aws s3 ls
+Result: 
+An error occurred (AccessDenied) when calling the ListBuckets operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: s3:ListAllMyBuckets because no VPC endpoint policy allows the s3:ListAllMyBuckets action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws s3 mb s3://bogus-bucket-test3 --endpoint-url https://mcdonalds.com
+Result: make_bucket failed: s3://bogus-bucket-test3 An error occurred (403) when calling the CreateBucket operation: Forbidden
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: secretsmanager
+Command: aws secretsmanager create-secret --name bogus-secret-key --secret-string bogus-string --kms-key-id 1234
+Result: 
+An error occurred (InvalidParameterException) when calling the CreateSecret operation: The operation failed because of an invalid KMS key: Invalid keyId '1234' (Service: AWSKMS; Status Code: 400; Error Code: NotFoundException; Request ID: cb32d6cb-32c4-48dc-9eb0-38a35840d2e8; Proxy: null)
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws secretsmanager list-secrets
+Result: 
+An error occurred (AccessDeniedException) when calling the ListSecrets operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: secretsmanager:ListSecrets because no VPC endpoint policy allows the secretsmanager:ListSecrets action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager describe-secret --secret-id bogus-secret
+Result: 
+An error occurred (ResourceNotFoundException) when calling the DescribeSecret operation: Secrets Manager can't find the specified secret.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws secretsmanager get-random-password
+Result: 
+An error occurred (AccessDeniedException) when calling the GetRandomPassword operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: secretsmanager:GetRandomPassword because no VPC endpoint policy allows the secretsmanager:GetRandomPassword action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws secretsmanager get-secret-value --secret-id bogus-secret-id
+Result: 
+An error occurred (ResourceNotFoundException) when calling the GetSecretValue operation: Secrets Manager can't find the specified secret.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws secretsmanager delete-secret --secret-id 1234
+Result: 
+An error occurred (ResourceNotFoundException) when calling the DeleteSecret operation: Secrets Manager can't find the specified secret.
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: sns
+Command: aws sns create-topic --name bogus-topic
+Result: {
+    "TopicArn": "arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic"
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: sleep 15 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws sns list-topics
+Result: {
+    "Topics": [
+        {
+            "TopicArn": "arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic"
+        }
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws sns publish --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic --message 'Bogus message'
+Result: {
+    "MessageId": "6f4da246-6ecf-5ee0-86d1-fd331c277ba4"
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:[ACCOUNT_ID]:bogus-topic
+Result: 
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: sqs
+Command: aws sqs create-queue --queue-name bogus-queue
+Result: {
+    "QueueUrl": "https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue"
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: sleep 15 && echo sleep
+Result: sleep
+
+Verdict: Sleep Command
+Command: aws sqs list-queues
+Result: {
+    "QueueUrls": [
+        "https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue"
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue --message-body 'Bogus message'
+Result: {
+    "MD5OfMessageBody": "ec416c225f02a925ce40e390cf02012a",
+    "MessageId": "3dd13b18-696e-44c9-9964-c689b12d88c0"
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws sqs receive-message --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue
+Result: {
+    "Messages": [
+        {
+            "MessageId": "3dd13b18-696e-44c9-9964-c689b12d88c0",
+            "ReceiptHandle": "AQEBsH03kHTDArhXagRvLo6JopCQcNdWAT2XZGMNpLZ4zxBvHC0m209yt0ZfrchfNYHvL89DeVSiI04sX+xaa42+F+NaA3iCflu+SbHkmhsGABCx0AqsOrZ55vBjwnr/PKoNYMNUNo6ntW3azrQyYFD8/UYosuvoVBIRFcmXfaOedXVvLGI0owkwdwBSCE2040oJa0qEeg7r1WfSzWsuublbacNGGQoJWFSxYm3Ii2qe4EeXlD0yrSErE0ss7A/RDPINtuJNyGqWIG6wo+XnA6F1tx4OH3Mw+4Lu9JCPkn+dBggXmI6Y+iUZk/2p0clQfgY7KLsDnVInJYpjWDRldQ5ksR1KV7WAZDv3CYl9DVSaYp/0seelzq11FjzW5jC4JRocbxxxhpILSfe+pHcqCBiG5w==",
+            "MD5OfBody": "ec416c225f02a925ce40e390cf02012a",
+            "Body": "Bogus message"
+        }
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws sqs delete-queue --queue-url https://sqs.us-east-1.amazonaws.com/[ACCOUNT_ID]/bogus-queue
+Result: 
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: ssm
+Command: aws ssm list-commands
+Result: {
+    "Commands": []
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ssm describe-instance-information
+Result: {
+    "InstanceInformationList": [
+        {
+            "InstanceId": "i-085da07e343a95c6b",
+            "PingStatus": "Online",
+            "LastPingDateTime": "2024-10-01T03:43:25.813000+00:00",
+            "AgentVersion": "3.3.380.0",
+            "IsLatestVersion": false,
+            "PlatformType": "Linux",
+            "PlatformName": "Amazon Linux",
+            "PlatformVersion": "2023",
+            "ResourceType": "EC2Instance",
+            "IPAddress": "192.168.0.14",
+            "ComputerName": "ip-192-168-0-14.ec2.internal",
+            "SourceId": "i-085da07e343a95c6b",
+            "SourceType": "AWS::EC2::Instance"
+        }
+    ]
+}
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ssm create-document --name bogus-document --content log-events.json
+Result: 
+An error occurred (InvalidDocumentContent) when calling the CreateDocument operation: JSON not well-formed. at Line: 1, Column: 4
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ssm get-parameter --name bogus-parameter
+Result: 
+An error occurred (ParameterNotFound) when calling the GetParameter operation: 
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ssm send-command --document-name bogus-document --targets file://targets.json
+Result: 
+An error occurred (InvalidDocument) when calling the SendCommand operation: 
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ssm delete-document --name bogus-document
+Result: 
+An error occurred (InvalidDocument) when calling the DeleteDocument operation: Document bogus-document does not exist in your account
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: ssmmessages
+Command: aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateControlChannel
+Result: 
+An error occurred (TargetNotConnected) when calling the StartSession operation: bogus-instance-id is not connected.
+
+Verdict: Allowed by VPC Endpoint Policy
+Command: aws ssm start-session --target bogus-instance-id --document-name ssmmessages:CreateDataChannel
+Result: 
+An error occurred (TargetNotConnected) when calling the StartSession operation: bogus-instance-id is not connected.
+
+Verdict: Allowed by VPC Endpoint Policy
+
+Testing VPC Endpoint Policy configured with ResourceRestriction for service: sts
+Command: aws sts get-session-token
+Result: 
+An error occurred (AccessDenied) when calling the GetSessionToken operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: sts:GetSessionToken on resource: Resource because no VPC endpoint policy allows the sts:GetSessionToken action
+
+Verdict: Denied by VPC Endpoint Policy
+Command: aws sts get-caller-identity
+Result: 
+An error occurred (AccessDenied) when calling the GetCallerIdentity operation: User: arn:aws:sts::[ACCOUNT_ID]:assumed-role/Test_ec2_Role/i-085da07e343a95c6b is not authorized to perform: sts:GetCallerIdentity on resource: Resource because no VPC endpoint policy allows the sts:GetCallerIdentity action
+
+Verdict: Denied by VPC Endpoint Policy
