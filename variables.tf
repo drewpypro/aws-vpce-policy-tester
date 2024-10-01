@@ -1,7 +1,7 @@
 variable "option" {
   type        = number
   description = "Set this to the desired test option"
-  default     = 6
+  default     = 7
 }
 
 locals {
