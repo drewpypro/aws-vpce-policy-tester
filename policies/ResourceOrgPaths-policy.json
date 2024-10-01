@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "${service_name}:*",
+        "Resource": "*",
+        "Condition": {
+          "ForAnyValue:StringLike": {
+            "aws:ResourceOrgPaths": ["${org_path}*"]
+          }
+        }
+      }
+    ]
+  }

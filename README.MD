@@ -23,7 +23,7 @@ I haven't previously tested VPC endpoint policies in depth, but I understand the
 ## Key Features
 - Tests multiple AWS services against VPC endpoint policies
 - Identifies allowed and denied actions for each service
-- Supports different policy configurations (PrincipalOrgID, PrincipalAccount, PrincipalOrgPaths, ResourceRestriction, DenyAll)
+- Supports different policy configurations (PrincipalOrgID, PrincipalAccount, PrincipalOrgPaths, ResourceRestriction, ResourceAccount, ResourceOrgid, ResourceOrgPaths and DenyAll)
 - Loads an AWS CLI command database for testing each service
 - Generates detailed logs of test results
 - Creates CSV reports for easy analysis
