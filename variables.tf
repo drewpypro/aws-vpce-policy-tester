@@ -1,7 +1,7 @@
 variable "option" {
   type        = number
-  description = "Set this to 1 (PrincipalOrgID), 2 (PrincipalAccount), 3 (ResourceRestriction), 4 (OU-Path) or 5 (Deny All)"
-  default     = 4
+  description = "Set this to the desired test option"
+  default     = 6
 }
 
 locals {
@@ -11,6 +11,9 @@ locals {
     3 = "PrincipalOrgPaths"
     4 = "ResourceRestriction"
     5 = "DenyAll"
+    6 = "ResourceOrgID"
+    7 = "ResourceOrgPaths"
+    8 = "ResourceAccount" # This policy does not allow any actions. Instead, it uses the Deny effect which explicitly denies access to all of the resources listed in the statement that do not belong to the listed account.
   }
 }
 

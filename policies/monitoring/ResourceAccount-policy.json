@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "cloudwatch:*",
+      "Resource": "arn:aws:cloudwatch:${region}:${account_id}:*"
+    },
+    {
+      "Sid": "DenyInteractionWithResourcesNotInSpecificAccount",
+      "Action": "${service_name}:*",
+      "Effect": "Deny",
+      "Resource": [
+        "arn:aws:${service_name}:${region}:${account_id}:*"
+      ],
+      "Condition": {
+        "StringNotEquals": {
+          "aws:ResourceAccount": [
+            "${account_id}"
+          ]
+        }
+      }
+    }
+  ]
+}

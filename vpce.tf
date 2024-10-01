@@ -6,6 +6,9 @@ resource "null_resource" "policy_trigger" {
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
       var.option == 4 ? "Resource-policy.json" :
       var.option == 5 ? "broken_policy.json" :
+      var.option == 6 ? "ResourceOrgID-policy.json" :
+      var.option == 7 ? "ResourceOrgPaths-policy.json" :
+      var.option == 8 ? "ResourceOrgPaths-policy.json" :
     "PrincipalOrgID-policy.json"}")
   }
 }
@@ -17,6 +20,9 @@ resource "null_resource" "s3_policy_trigger" {
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
       var.option == 4 ? "Resource-policy.json" :
       var.option == 5 ? "broken_policy.json" :
+      var.option == 6 ? "ResourceOrgID-policy.json" :
+      var.option == 7 ? "ResourceOrgPaths-policy.json" :
+      var.option == 8 ? "ResourceOrgPaths-policy.json" :
     "PrincipalOrgID-policy.json"}")
   }
 }
@@ -28,6 +34,9 @@ resource "null_resource" "monitoring_policy_trigger" {
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
       var.option == 4 ? "Resource-policy.json" :
       var.option == 5 ? "broken_policy.json" :
+      var.option == 6 ? "ResourceOrgID-policy.json" :
+      var.option == 7 ? "ResourceOrgPaths-policy.json" :
+      var.option == 8 ? "ResourceOrgPaths-policy.json" :
     "PrincipalOrgID-policy.json"}")
   }
 }
@@ -48,6 +57,9 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
       var.option == 4 ? "Resource-policy.json" :
       var.option == 5 ? "broken_policy.json" :
+      var.option == 6 ? "ResourceOrgID-policy.json" :
+      var.option == 7 ? "ResourceOrgPaths-policy.json" :
+      var.option == 8 ? "ResourceOrgPaths-policy.json" :
       "PrincipalOrgID-policy.json"
     }"
     : "${path.module}/policies/${
@@ -56,6 +68,9 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
       var.option == 4 ? "Resource-policy.json" :
       var.option == 5 ? "broken_policy.json" :
+      var.option == 6 ? "ResourceOrgID-policy.json" :
+      var.option == 7 ? "ResourceOrgPaths-policy.json" :
+      var.option == 8 ? "ResourceOrgPaths-policy.json" :
       "PrincipalOrgID-policy.json"
     }",
     {
@@ -88,6 +103,9 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
       var.option == 3 ? "PrincipalOrgPaths-policy.json" :
       var.option == 4 ? "Resource-policy.json" :
       var.option == 5 ? "broken_policy.json" :
+      var.option == 6 ? "ResourceOrgID-policy.json" :
+      var.option == 7 ? "ResourceOrgPaths-policy.json" :
+      var.option == 8 ? "ResourceOrgPaths-policy.json" :
       "PrincipalOrgID-policy.json"
     }",
     {
