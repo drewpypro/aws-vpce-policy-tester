@@ -1,8 +1,16 @@
 variable "services" {
-  default = ["autoscaling", "dms", "ec2", "ec2messages",
-    "elasticloadbalancing", "logs", "monitoring", "rds",
-    "secretsmanager", "sns", "sqs", "ssm",
-  "ssmmessages", "sts"]
+  validation {
+    condition = alltrue([for service in var.services : contains([var.authorized_services], service)])
+    error_message = "Invalid service provided. Allowed values are: ${join(", ", var.authorized_services)}"
+  }
+}
+
+variable "authorized_services" {
+    description = "List of services authorized for security group creation"
+    default = ["autoscaling", "dms", "ec2", "ec2messages",
+      "elasticloadbalancing", "logs", "monitoring", "rds",
+      "secretsmanager", "sns", "sqs", "ssm",
+      "ssmmessages", "sts"]
 }
 
 variable "subnet_cidrs" {
