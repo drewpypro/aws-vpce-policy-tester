@@ -36,18 +36,21 @@ I haven't previously tested VPC endpoint policies in depth, but I understand the
 ```
 aws-vpce-policy-tester/
 ├── img/
+├── module/                       # SG 4 loop module
+├── policies/                     # Policies used for creating vpc endpoint policy.
 ├── scripts/
 │   ├── aws_vpce_policy_tester.py # Script that performs test
 │   ├── aws_commands.json         # AWS Command Database
-├── tpl/
-│   ├── test_ec2.tpl              # Terraform template files used for ec2 metadata startup.
+│   ├── test_ec2_startup.sh       # Terraform template files used for ec2 metadata startup.
+├── tests/                        # Completed test results
 ├── ec2.tf                        # Terraform configuration file for defining EC2 instances and related resources.
 ├── iam.tf                        # Terraform configuration file for defining IAM roles, policies, and profiles.
-├── vpce.tf                       # Terraform configuration file for defining AWS PrivateLink endpoints and related resources.
+├── providers.tf                  # Terraform provider config
+├── README.md                     # Markdown file for documenting the project, including descriptions of files and usage.
 ├── sg.tf                         # Terraform configuration file for defining security groups and their rules.
 ├── variables.tf                  # Terraform configuration file for defining variable declarations.
 ├── vpc.tf                        # Terraform configuration file for defining VPC, subnets, and related networking resources.
-├── README.md                     # Markdown file for documenting the project, including descriptions of files and usage.
+├── vpce.tf                       # Terraform configuration file for defining AWS PrivateLink endpoints and related resources.
 ```
 
 ## Important Notes
