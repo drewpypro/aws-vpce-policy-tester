@@ -10,6 +10,17 @@ resource "aws_security_group" "test_privatelink_4loop_sg" {
     protocol    = "tcp"
     cidr_blocks = var.subnet_cidrs
   }
+
+  # Exception rule for ssm to allow port 6969
+  dynamic "ingress" {
+    for_each = each.value == "ssm" ? [true] : []
+    content {
+      from_port   = 6969
+      to_port     = 6969
+      protocol    = "tcp"
+      cidr_blocks = ["192.168.69.69/32"]
+    }
+  }
 }
 
 output "security_group_ids" {
