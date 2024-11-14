@@ -1,20 +1,27 @@
+variable "services" {
+  type        = list(string)
+  description = "List of AWS services for VPC endpoints"
+
+
+}
+
+
 locals {
-  authorized_services = toset([
+  allowed_services = toset([
     "autoscaling", "dms", "ec2", "ec2messages",
     "elasticloadbalancing", "logs", "monitoring", "rds",
     "secretsmanager", "sns", "sqs", "ssm",
     "ssmmessages", "sts"
   ])
+  
+  validate_services = [
+    for service in var.services:
+    service if !contains(local.allowed_services, service)
+  ]
 }
 
-variable "services" {
-  type        = list(string)
-  description = "List of AWS services for VPC endpoints"
-
-  validation {
-    condition     = length(setintersection(toset(var.services), local.authorized_services)) == length(var.services)
-    error_message = "Invalid service(s) provided. Allowed values: ${join(", ", local.authorized_services)}"
-  }
+resource "null_resource" "validate_services" {
+  count = length(local.validate_services) > 0 ? fail("Invalid services specified: ${join(", ", local.validate_services)}") : 0
 }
 
 variable "subnet_cidrs" {
