@@ -29,6 +29,8 @@ jobs:
 
       - name: Check for `skip-tf-apply` label
         id: check_label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
           if [[ "$PR_LABELS" == *"skip-tf-apply"* ]]; then
