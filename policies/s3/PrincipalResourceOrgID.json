@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "${service_name}:*",
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:ResourceOrgID": "${org_id}",
+            "aws:PrincipalOrgID": "${org_id}"
+          }
+        }
+      }
+    ]
+}

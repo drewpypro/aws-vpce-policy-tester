@@ -9,6 +9,7 @@ resource "null_resource" "policy_trigger" {
       var.option == 6 ? "ResourceOrgID-policy.json" :
       var.option == 7 ? "ResourceOrgPaths-policy.json" :
       var.option == 8 ? "ResourceAccount-policy.json" :
+      var.option == 9 ? "PrincipalResourceOrgID.json" :
     "PrincipalOrgID-policy.json"}")
   }
 }
@@ -23,6 +24,7 @@ resource "null_resource" "s3_policy_trigger" {
       var.option == 6 ? "ResourceOrgID-policy.json" :
       var.option == 7 ? "ResourceOrgPaths-policy.json" :
       var.option == 8 ? "ResourceAccount-policy.json" :
+      var.option == 9 ? "PrincipalResourceOrgID.json" :
     "PrincipalOrgID-policy.json"}")
   }
 }
@@ -37,8 +39,17 @@ resource "null_resource" "monitoring_policy_trigger" {
       var.option == 6 ? "ResourceOrgID-policy.json" :
       var.option == 7 ? "ResourceOrgPaths-policy.json" :
       var.option == 8 ? "ResourceAccount-policy.json" :
+      var.option == 9 ? "PrincipalResourceOrgID.json" :
     "PrincipalOrgID-policy.json"}")
   }
+}
+
+# SG 4loop Module
+module "forloop_sg" {
+  source       = "./module"
+  vpc_id       = aws_vpc.test_vpc.id
+  services     = var.services
+  subnet_cidrs = var.subnet_cidrs
 }
 
 # Create VPC Endpoints for each service, referencing the correct policy file based on the selected option
@@ -60,6 +71,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
       var.option == 6 ? "ResourceOrgID-policy.json" :
       var.option == 7 ? "ResourceOrgPaths-policy.json" :
       var.option == 8 ? "ResourceAccount-policy.json" :
+      var.option == 9 ? "PrincipalResourceOrgID.json" :
       "PrincipalOrgID-policy.json"
     }"
     : "${path.module}/policies/${
@@ -71,6 +83,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
       var.option == 6 ? "ResourceOrgID-policy.json" :
       var.option == 7 ? "ResourceOrgPaths-policy.json" :
       var.option == 8 ? "ResourceAccount-policy.json" :
+      var.option == 9 ? "PrincipalResourceOrgID.json" :
       "PrincipalOrgID-policy.json"
     }",
     {
@@ -82,7 +95,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
     }
   )
 
-  security_group_ids = [aws_security_group.test_privatelink_sg.id]
+  security_group_ids = [module.forloop_sg.security_group_ids[each.key]]
   subnet_ids         = [aws_subnet.endpoint_subnet.id]
 
   depends_on = [null_resource.policy_trigger, null_resource.monitoring_policy_trigger]
@@ -106,6 +119,7 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
       var.option == 6 ? "ResourceOrgID-policy.json" :
       var.option == 7 ? "ResourceOrgPaths-policy.json" :
       var.option == 8 ? "ResourceAccount-policy.json" :
+      var.option == 9 ? "PrincipalResourceOrgID.json" :
       "PrincipalOrgID-policy.json"
     }",
     {

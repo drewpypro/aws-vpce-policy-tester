@@ -1,7 +1,7 @@
 variable "option" {
   type        = number
   description = "Set this to the desired test option"
-  default     = 8
+  default     = 9
 }
 
 locals {
@@ -14,17 +14,21 @@ locals {
     6 = "ResourceOrgID"
     7 = "ResourceOrgPaths"
     8 = "ResourceAccount" # This policy does not allow any actions. Instead, it uses the Deny effect which explicitly denies access to all of the resources listed in the statement that do not belong to the listed account.
+    9 = "PrincipalResourceOrgId"
   }
 }
 
 # Define a list of services that need VPC endpoints
 variable "services" {
   default = ["autoscaling", "dms", "ec2", "ec2messages",
-             "elasticloadbalancing", "logs", "monitoring", "rds",
-             "secretsmanager", "sns", "sqs", "ssm",
-             "ssmmessages", "sts"]
+    "elasticloadbalancing", "logs", "monitoring", "rds",
+    "secretsmanager", "sns", "sqs", "ssm",
+  "ssmmessages", "sts"]
 }
 
+variable "subnet_cidrs" {
+  default = ["192.168.0.0/16"]
+}
 
 variable "gateway_services" {
   default = ["dynamodb", "s3"]
