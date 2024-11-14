@@ -1,23 +1,11 @@
 variable "services" {
   type        = list(string)
   description = "List of AWS services for VPC endpoints"
-}
-
-locals {
-  allowed_services = toset([
-    "autoscaling", "dms", "ec2", "ec2messages",
-    "elasticloadbalancing", "logs", "monitoring", "rds",
-    "secretsmanager", "sns", "sqs", "ssm",
-    "ssmmessages", "sts"
-  ])
-
-  invalid_services = [
-    for s in var.services : s if !contains(local.allowed_services, s)
-  ]
-
-  validate = length(local.invalid_services) == 0 ? true : tobool(
-    "Invalid services found: ${join(", ", local.invalid_services)}"
-  )
+  
+  validation {
+    condition     = can([regex("^(autoscaling|dms|ec2|ec2messages|elasticloadbalancing|logs|monitoring|rds|secretsmanager|sns|sqs|ssm|ssmmessages|sts)$", "test")])
+    error_message = "Invalid service. Must be one of: autoscaling, dms, ec2, ec2messages, elasticloadbalancing, logs, monitoring, rds, secretsmanager, sns, sqs, ssm, ssmmessages, sts"
+  }
 }
 
 variable "subnet_cidrs" {
