@@ -133,3 +133,8 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
 
   depends_on = [null_resource.s3_policy_trigger]
 }
+
+output "service_to_sg_mapping" {
+  description = "Map of service names to security group IDs"
+  value       = module.forloop_sg.security_group_ids
+}
