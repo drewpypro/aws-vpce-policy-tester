@@ -11,7 +11,7 @@
         "Effect": "Allow",
         "Principal": "*",
         "Action": "${service_name}:*",
-        "Resource": "arn:aws:${service_name}:${region}:${account_id}:*"
+        "Resource": "arn:aws:${service_name}:${region}:${ACCOUNT_ID}:*"
       }
     ]
   }

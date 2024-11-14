@@ -20,7 +20,7 @@
         "Resource": "*",
         "Condition": {
           "StringEquals": {
-            "aws:PrincipalOrgID": "${org_id}"
+            "aws:PrincipalOrgID": "${ORG_ID}"
           }
         }
       }

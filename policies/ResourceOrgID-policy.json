@@ -8,7 +8,7 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "aws:ResourceOrgID": "${org_id}"
+          "aws:ResourceOrgID": "${ORG_ID}"
         }
       }
     }

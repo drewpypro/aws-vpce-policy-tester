@@ -1,4 +1,5 @@
 resource "aws_security_group" "test_privatelink_4loop_sg" {
+  for_each    = toset(var.services)
   name        = "${each.value}-vpce-sg"
   description = "Allow traffic to/from ${each.value} privatelink endpoint"
   vpc_id      = var.vpc_id
@@ -13,5 +14,5 @@ resource "aws_security_group" "test_privatelink_4loop_sg" {
 
 output "security_group_ids" {
   description = "Map of service names to security group IDs"
-  value       = { for key, sg in aws_security_group.this : key => sg.id }
+  value       = { for key, sg in aws_security_group.test_privatelink_4loop_sg : key => sg.id }
 }

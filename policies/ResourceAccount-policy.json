@@ -8,7 +8,7 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "aws:ResourceAccount": "${account_id}"
+          "aws:ResourceAccount": "${ACCOUNT_ID}"
         }
       }
     }

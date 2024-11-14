@@ -52,17 +52,17 @@ variable "availability_zone" {
   default     = "us-east-1a"
 }
 
-variable "org_id" {
+variable "ORG_ID" {
   description = "org-id must be configured in your aws accounts and supplied as a variable"
   type        = string
 }
 
-variable "org_path" {
+variable "ORG_PATH" {
   description = "OU Path must be configured in your aws accounts and supplied as a variable"
   type        = string
 }
 
-variable "account_id" {
+variable "ACCOUNT_ID" {
   description = "An account must be created prior to test and this is mandatory variable"
   type        = string
 }
@@ -79,12 +79,12 @@ variable "instance_type" {
   default     = "c4.large"
 }
 
-variable "source_ssh_net" {
+variable "SOURCE_SSH_NET" {
   description = "Public IP to SSH to consumer ec2"
   type        = string
 }
 
-variable "public_key" {
+variable "PUBLIC_KEY" {
   description = "Public SSH key"
   type        = string
 }

@@ -4,12 +4,18 @@
       {
         "Effect": "Allow",
         "Principal": "*",
+        "Action": "cloudwatch:*",
+        "Resource": "arn:aws:cloudwatch:${region}:${ACCOUNT_ID}:*"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": "*",
         "Action": "${service_name}:*",
         "Resource": "*",
         "Condition": {
           "StringEquals": {
-            "aws:ResourceOrgID": "${org_id}",
-            "aws:PrincipalOrgID": "${org_id}"
+            "aws:ResourceOrgID": "${ORG_ID}",
+            "aws:PrincipalOrgID": "${ORG_ID}"
           }
         }
       }

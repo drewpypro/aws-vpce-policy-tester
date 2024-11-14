@@ -21,10 +21,10 @@ resource "aws_instance" "test_ec2" {
 
   iam_instance_profile = aws_iam_instance_profile.test_instance_profile.name
 
-  user_data = templatefile("tpl/test_ec2_startup.sh", {
-    public_key         = var.public_key
-    account_id         = var.account_id
-    source_ssh_net     = var.source_ssh_net
+  user_data = templatefile("scripts/test_ec2_startup.sh", {
+    public_key         = var.PUBLIC_KEY
+    account_id         = var.ACCOUNT_ID
+    source_ssh_net     = var.SOURCE_SSH_NET
     aws_commands       = file("${path.module}/scripts/aws_commands.json")
     tester_script      = file("${path.module}/scripts/aws_vpce_policy_tester.py")
     option             = var.option
