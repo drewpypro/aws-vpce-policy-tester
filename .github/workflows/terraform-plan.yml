@@ -12,7 +12,7 @@ env:
   TF_VAR_org_id: ${{ secrets.ORG_ID }}
   TF_VAR_org_path: ${{ secrets.ORG_PATH }}
   TF_VAR_source_ssh_net: ${{ secrets.SOURCE_SSH_NET }}
-  TF_VAR_PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+  TF_VAR_public_key: ${{ secrets.PUBLIC_KEY }}
   TF_VAR_account_id: ${{ secrets.ACCOUNT_ID }}
   BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
   BUCKET_KEY: ${{ secrets.BUCKET_KEY }}
