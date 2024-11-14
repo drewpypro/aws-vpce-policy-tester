@@ -1,10 +1,7 @@
 variable "services" {
   type        = list(string)
   description = "List of AWS services for VPC endpoints"
-
-
 }
-
 
 locals {
   allowed_services = toset([
@@ -13,15 +10,14 @@ locals {
     "secretsmanager", "sns", "sqs", "ssm",
     "ssmmessages", "sts"
   ])
-  
-  validate_services = [
-    for service in var.services:
-    service if !contains(local.allowed_services, service)
-  ]
-}
 
-resource "null_resource" "validate_services" {
-  count = length(local.validate_services) > 0 ? fail("Invalid services specified: ${join(", ", local.validate_services)}") : 0
+  invalid_services = [
+    for s in var.services : s if !contains(local.allowed_services, s)
+  ]
+
+  validate = length(local.invalid_services) == 0 ? true : tobool(
+    "Invalid services found: ${join(", ", local.invalid_services)}"
+  )
 }
 
 variable "subnet_cidrs" {
