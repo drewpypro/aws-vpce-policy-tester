@@ -41,10 +41,10 @@ cat <<'EOF' > /usr/local/bin/test_ec2_startup.sh
 ${startup_script}
 EOF
 
-sed -i "s|source_ssh_net|${source_ssh_net}|g" /home/ec2-user/aws_vpce_policy_tester.py
+sed -i "s|source_ssh_net|${SOURCE_SSH_NET}|g" /home/ec2-user/aws_vpce_policy_tester.py
 sed -i "s|OPTION_DESCRIPTION|${option_description}|g" /home/ec2-user/aws_vpce_policy_tester.py
-sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_vpce_policy_tester.py
-sed -i "s|VAR_ACCOUNT_ID|${account_id}|g" /home/ec2-user/aws_commands.json
+sed -i "s|VAR_ACCOUNT_ID|${ACCOUNT_ID}|g" /home/ec2-user/aws_vpce_policy_tester.py
+sed -i "s|VAR_ACCOUNT_ID|${ACCOUNT_ID}|g" /home/ec2-user/aws_commands.json
 
 sudo chmod +x /usr/local/bin/test_ec2_startup.sh
 sudo /usr/local/bin/test_ec2_startup.sh

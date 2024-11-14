@@ -88,9 +88,9 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
     }",
     {
       service_name = each.key,
-      account_id   = var.account_id,
-      org_id       = var.org_id,
-      org_path     = var.org_path,
+      account_id   = var.ACCOUNT_ID,
+      org_id       = var.ORG_ID,
+      org_path     = var.ORG_PATH,
       region       = var.region
     }
   )
@@ -124,9 +124,9 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
     }",
     {
       service_name = each.key,
-      account_id   = var.account_id,
-      org_id       = var.org_id,
-      org_path     = var.org_path,
+      account_id   = var.ACCOUNT_ID,
+      org_id       = var.ORG_ID,
+      org_path     = var.ORG_PATH,
       region       = var.region
     }
   )

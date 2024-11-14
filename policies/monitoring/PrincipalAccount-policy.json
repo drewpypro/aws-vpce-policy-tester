@@ -8,7 +8,7 @@
         "Resource": "*",
         "Condition": {
           "StringEquals": {
-            "aws:PrincipalAccount": "${account_id}"
+            "aws:PrincipalAccount": "${ACCOUNT_ID}"
           }
         }
       },
@@ -19,7 +19,7 @@
         "Resource": "*",
         "Condition": {
           "StringEquals": {
-            "aws:PrincipalAccount": "${account_id}"
+            "aws:PrincipalAccount": "${ACCOUNT_ID}"
           }
         }
       }

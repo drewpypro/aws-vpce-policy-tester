@@ -20,7 +20,7 @@
         "Resource": "*",
         "Condition": {
           "ForAnyValue:StringLike": {
-            "aws:ResourceOrgPaths": ["${org_path}*"]
+            "aws:ResourceOrgPaths": ["${ORG_PATH}*"]
           }
         }
       }
