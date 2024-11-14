@@ -23,11 +23,15 @@ variable "services" {
   default = ["autoscaling", "dms", "ec2", "ec2messages",
     "elasticloadbalancing", "logs", "monitoring", "rds",
     "secretsmanager", "sns", "sqs", "ssm",
-  "ssmmessages", "sts"]
+  "ssmmessages", "sts",]
 }
 
 variable "subnet_cidrs" {
-  default = ["192.168.0.0/16"]
+  default = ["192.168.0.0/25"]
+    validation {
+    condition     = alltrue([for cidr in var.subnet_cidrs : length(regex("[0-9]+$", cidr)) > 0 && tonumber(regex("[0-9]+$", cidr)) >= 25])
+    error_message = "Subnet is big doo doo (must be /25 or less)"
+  }
 }
 
 variable "gateway_services" {
