@@ -21,7 +21,7 @@ env:
   DO_SPACES_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_ACCESS_KEY }}
   
 jobs:
-  terraform:
+  terraform-apply:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +32,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
+          PR_LABELS=$(gh pr view dev ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
           if [[ "$PR_LABELS" == *"skip-tf-apply"* ]]; then
             echo "Label 'skip-tf-apply' detected. Skipping apply step."
             echo "skip_apply=true" >> $GITHUB_ENV
