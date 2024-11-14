@@ -6,7 +6,7 @@ resource "aws_instance" "test_ec2" {
   ami             = var.ami_id
   instance_type   = var.instance_type
   subnet_id       = aws_subnet.test_subnet.id
-  security_groups = [aws_security_group.test_ec2_sg.id]
+  vpc_security_group_ids = [aws_security_group.test_ec2_sg.id]
 
   tags = {
     Name = "test-ec2-instance"
