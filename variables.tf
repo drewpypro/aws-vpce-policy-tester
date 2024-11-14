@@ -88,4 +88,3 @@ variable "PUBLIC_KEY" {
   description = "Public SSH key"
   type        = string
 }
-
