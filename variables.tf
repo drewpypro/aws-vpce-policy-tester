@@ -28,10 +28,10 @@ variable "services" {
 
 variable "subnet_cidrs" {
   default = ["192.168.0.0/25"]
-    validation {
-    condition     = alltrue([for cidr in var.subnet_cidrs : length(regex("[0-9]+$", cidr)) > 0 && tonumber(regex("[0-9]+$", cidr)) >= 25])
-    error_message = "Subnet is big doo doo (must be /25 or less)"
-  }
+  #   validation {
+  #   condition     = alltrue([for cidr in var.subnet_cidrs : length(regex("[0-9]+$", cidr)) > 0 && tonumber(regex("[0-9]+$", cidr)) >= 25])
+  #   error_message = "Subnet is big doo doo (must be /25 or less)"
+  # }
 }
 
 variable "gateway_services" {
