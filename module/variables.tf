@@ -4,11 +4,11 @@ variable "services" {
 
   validation {
     condition = alltrue([
-      for service in var.services : service in [
-        "autoscaling", "dms", "ec2", "ec2messages", "elasticloadbalancing", 
-        "logs", "monitoring", "rds", "secretsmanager", 
+      for service in var.services : contains([
+        "autoscaling", "dms", "ec2", "ec2messages", "elasticloadbalancing",
+        "logs", "monitoring", "rds", "secretsmanager",
         "sns", "sqs", "ssm", "ssmmessages", "sts"
-      ]
+      ], service)
     ])
     error_message = "Invalid service(s) provided. Allowed values: autoscaling, dms, ec2, ec2messages, elasticloadbalancing, logs, monitoring, rds, secretsmanager, sns, sqs, ssm, ssmmessages, sts."
   }
