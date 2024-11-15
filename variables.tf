@@ -23,11 +23,11 @@ variable "services" {
   default = ["autoscaling", "dms", "ec2", "ec2messages",
     "elasticloadbalancing", "logs", "monitoring", "rds",
     "secretsmanager", "sns", "sqs", "ssm",
-  "ssmmessages", "sts",]
+  "ssmmessages", "sts","efs"]
 }
 
 variable "subnet_cidrs" {
-  default = ["192.168.0.0/24"]
+  default = ["192.168.0.0/25"]
 }
 
 variable "gateway_services" {
