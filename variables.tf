@@ -23,7 +23,7 @@ variable "services" {
   default = ["autoscaling", "dms", "ec2", "ec2messages",
     "elasticloadbalancing", "logs", "monitoring", "rds",
     "secretsmanager", "sns", "sqs", "ssm",
-  "ssmmessages", "sts","efs"]
+  "ssmmessages", "sts", ]
 }
 
 variable "subnet_cidrs" {
