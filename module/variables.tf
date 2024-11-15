@@ -1,20 +1,21 @@
 variable "services" {
-  description = "List of AWS services for VPC endpoints"
   type        = list(string)
+  description = "List of AWS services for VPC endpoints"
 
   validation {
-    condition = alltrue([
-      for service in var.services : service in [
-        "autoscaling", "dms", "ec2", "ec2messages",
-        "elasticloadbalancing", "logs", "monitoring", "rds",
-        "secretsmanager", "sns", "sqs", "ssm",
-        "ssmmessages", "sts"
-      ]
-    ])
-    error_message = "Invalid service(s) provided. Allowed values: autoscaling, dms, ec2, ec2messages, elasticloadbalancing, logs, monitoring, rds, secretsmanager, sns, sqs, ssm, ssmmessages, sts."
+    condition     = alltrue([for service in var.services : contains(local.authorized_services, service)])
+    error_message = "Invalid service(s) provided. Allowed values: $(join(",", local.authorized_services)}"
+    error_message = "Invalid service(s) provided. Allowed values: ${join(",", local.authorized_services)}"
   }
 }
 
+locals {
+    authorized_services = [
+        "autoscaling", "dms", "ec2", "ec2messages", "elasticloadbalancing", 
+        "logs", "monitoring", "rds", "secretsmanager", 
+        "sns", "sqs", "ssm", "ssmmessages", "sts"
+    ]
+}
 
 variable "subnet_cidrs" {
   validation {
