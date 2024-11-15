@@ -4,7 +4,6 @@ variable "services" {
 
   validation {
     condition     = alltrue([for service in var.services : contains(local.authorized_services, service)])
-    error_message = "Invalid service(s) provided. Allowed values: $(join(",", local.authorized_services)}"
     error_message = "Invalid service(s) provided. Allowed values: ${join(",", local.authorized_services)}"
   }
 }
