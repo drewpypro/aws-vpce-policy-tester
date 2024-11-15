@@ -27,7 +27,7 @@ variable "services" {
 }
 
 variable "subnet_cidrs" {
-  default = ["192.168.0.0/25"]
+  default = ["192.168.0.0/24"]
 }
 
 variable "gateway_services" {
