@@ -12,7 +12,6 @@ locals {
 resource "aws_security_group" "vpc_endpoint_sg" {
   for_each    = toset(var.services)
   name        = "${each.value}-vpce-sg"
-  description = "Allow traffic to/from ${each.value} PrivateLink endpoint"
   vpc_id      = var.vpc_id
 }
 
@@ -25,7 +24,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_referenced_sg" {
   from_port                       = 443
   to_port                         = 443
   ip_protocol                     = "tcp"
-  description                     = "Allow HTTPS traffic from referenced security group ${each.value}"
 }
 
 output "security_group_ids_modulev2" {
