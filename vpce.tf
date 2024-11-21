@@ -106,7 +106,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
     }
   )
 
-  security_group_ids = [module.forloop_sg.security_group_ids[each.key]]
+  security_group_ids = [module.forloop_sg.security_group_ids_modulev2[each.key]]
   subnet_ids         = [aws_subnet.endpoint_subnet.id]
 
   depends_on = [null_resource.policy_trigger, null_resource.monitoring_policy_trigger]
@@ -147,5 +147,5 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
 
 output "service_to_sg_mapping" {
   description = "Map of service names to security group IDs"
-  value       = module.forloop_sg.security_group_ids
+  value       = module.forloop_sg.security_group_ids_modulev2
 }
