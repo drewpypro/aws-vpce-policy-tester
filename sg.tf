@@ -41,7 +41,7 @@ resource "aws_security_group" "test_ec2_sg_2" {
 }
 
 resource "aws_security_group" "test_ec2_sg_3" {
-  name        = "test-ec2-sg-2"
+  name        = "test-ec2-sg-3"
   description = "Allow traffic to/from ec2"
   vpc_id      = aws_vpc.test_vpc.id
 
