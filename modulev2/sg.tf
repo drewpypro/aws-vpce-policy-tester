@@ -17,7 +17,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_referenced_sg" {
   description                     = "Allow HTTPS traffic from referenced security group ${each.value}"
 }
 
-output "security_group_ids" {
+output "security_group_ids_modulev2" {
   description = "Map of service names to security group IDs"
-  value       = { for key, sg in aws_security_group.test_privatelink_4loop_sg : key => sg.id }
+  value       = { for key, sg in aws_security_group.vpc_endpoint_sg : key => sg.id }
 }
