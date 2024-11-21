@@ -3,10 +3,10 @@ provider "aws" {
 }
 
 resource "aws_instance" "test_ec2" {
-  ami             = var.ami_id
-  instance_type   = var.instance_type
-  subnet_id       = aws_subnet.test_subnet.id
-  vpc_security_group_ids = [aws_security_group.test_ec2_sg.id]
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.test_subnet.id
+  vpc_security_group_ids = [aws_security_group.test_ec2_sg_1.id]
 
   tags = {
     Name = "test-ec2-instance"

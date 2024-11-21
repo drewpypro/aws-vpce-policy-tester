@@ -44,12 +44,23 @@ resource "null_resource" "monitoring_policy_trigger" {
   }
 }
 
+# # SG 4loop Module
+# module "forloop_sg" {
+#   source       = "./modulev1"
+#   vpc_id       = aws_vpc.test_vpc.id
+#   services     = var.services
+#   subnet_cidrs = var.subnet_cidrs
+# }
+
 # SG 4loop Module
 module "forloop_sg" {
-  source       = "./module"
-  vpc_id       = aws_vpc.test_vpc.id
-  services     = var.services
-  subnet_cidrs = var.subnet_cidrs
+  source   = "./modulev2"
+  vpc_id   = aws_vpc.test_vpc.id
+  services = var.services
+  referenced_security_groups = concat(
+    [aws_security_group.test_ec2_sg_1.id],
+    [aws_security_group.test_ec2_sg_2.id]
+  )
 }
 
 # Create VPC Endpoints for each service, referencing the correct policy file based on the selected option
@@ -95,7 +106,7 @@ resource "aws_vpc_endpoint" "service_vpc_endpoints" {
     }
   )
 
-  security_group_ids = [module.forloop_sg.security_group_ids[each.key]]
+  security_group_ids = [module.forloop_sg.security_group_ids_modulev2[each.key]]
   subnet_ids         = [aws_subnet.endpoint_subnet.id]
 
   depends_on = [null_resource.policy_trigger, null_resource.monitoring_policy_trigger]
@@ -136,5 +147,5 @@ resource "aws_vpc_endpoint" "gateway_endpoints" {
 
 output "service_to_sg_mapping" {
   description = "Map of service names to security group IDs"
-  value       = module.forloop_sg.security_group_ids
+  value       = module.forloop_sg.security_group_ids_modulev2
 }

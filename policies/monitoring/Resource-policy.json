@@ -5,7 +5,7 @@
         "Effect": "Allow",
         "Principal": "*",
         "Action": "cloudwatch:*",
-        "Resource": "arn:aws:cloudwatch:${region}:${account_id}:*"
+        "Resource": "arn:aws:cloudwatch:${region}:${ACCOUNT_ID}:*"
       },
       {
         "Effect": "Allow",

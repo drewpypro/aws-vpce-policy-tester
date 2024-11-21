@@ -23,7 +23,7 @@ resource "aws_security_group" "test_privatelink_4loop_sg" {
   }
 }
 
-output "security_group_ids" {
+output "security_group_ids_modulev1" {
   description = "Map of service names to security group IDs"
   value       = { for key, sg in aws_security_group.test_privatelink_4loop_sg : key => sg.id }
 }
