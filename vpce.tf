@@ -61,6 +61,10 @@ module "forloop_sg" {
     [aws_security_group.test_ec2_sg_1.id],
     [aws_security_group.test_ec2_sg_2.id]
   )
+  custom_ssm_access_rule = {
+    sg_id   = aws_security_group.test_ec2_sg_3.id
+    enabled = true
+  }
 }
 
 # Create VPC Endpoints for each service, referencing the correct policy file based on the selected option

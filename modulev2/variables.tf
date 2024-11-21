@@ -30,3 +30,15 @@ variable "referenced_security_groups" {
   description = "referenced-sg's"
   type = list(string)
 }
+
+variable "custom_ssm_access_rule" {
+  description = "Custom rule to allow specific SG ID access to SSM on port 6969"
+  type = object({
+    sg_id    = string
+    enabled  = bool
+  })
+  default = {
+    sg_id   = null
+    enabled = false
+  }
+}
