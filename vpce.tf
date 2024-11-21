@@ -44,12 +44,23 @@ resource "null_resource" "monitoring_policy_trigger" {
   }
 }
 
+# # SG 4loop Module
+# module "forloop_sg" {
+#   source       = "./modulev1"
+#   vpc_id       = aws_vpc.test_vpc.id
+#   services     = var.services
+#   subnet_cidrs = var.subnet_cidrs
+# }
+
 # SG 4loop Module
 module "forloop_sg" {
-  source       = "./module"
-  vpc_id       = aws_vpc.test_vpc.id
-  services     = var.services
-  subnet_cidrs = var.subnet_cidrs
+  source   = "./modulev2"
+  vpc_id   = aws_vpc.test_vpc.id
+  services = var.services
+  referenced_security_groups = concat(
+    aws_security_group.test_ec2_sg_1.id,
+    aws_security_group.test_ec2_sg_2.id
+  )
 }
 
 # Create VPC Endpoints for each service, referencing the correct policy file based on the selected option
