@@ -58,8 +58,8 @@ module "forloop_sg" {
   vpc_id   = aws_vpc.test_vpc.id
   services = var.services
   referenced_security_groups = concat(
-    aws_security_group.test_ec2_sg_1.id,
-    aws_security_group.test_ec2_sg_2.id
+    [aws_security_group.test_ec2_sg_1.id],
+    [aws_security_group.test_ec2_sg_2.id]
   )
 }
 
